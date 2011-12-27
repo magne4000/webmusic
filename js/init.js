@@ -88,7 +88,7 @@ $(document).ready(function() {
         var $this = $(this), ids = [], $target = $(target);
 		show_playlist_tab($playlist);
 		$target.each(function(){
-			ids.push($(this).data('track').id);
+			ids.push($this.data('track').id);
 		});
 		$playlist.playlist('empty');
 		getFileInformations({ids : ids}, function(tracks){
@@ -101,7 +101,7 @@ $(document).ready(function() {
     	var $this = $(this), ids = [], $target = $(target);
         show_playlist_tab($playlist);
         $target.each(function(){
-            ids.push($(this).data('track').id);
+            ids.push($this.data('track').id);
         });
         getFileInformations({ids : ids}, function(tracks){
             $playlist.playlist('add', tracks);
