@@ -61,8 +61,8 @@ function clone(obj){
 }
 
 function len(obj) {
-	var len = obj.length ? obj.length : 0;
-	for (var k in obj)
+	var len = obj.length ? obj.length : 0, k = null;
+	for (k in obj)
 		len++;
 	return len;
 }
@@ -72,7 +72,7 @@ function sendMail(textStatus, responseText){
 }
 
 function array_flip(trans) {
-	var key, tmp_ar = {};
+	var key = null, tmp_ar = {};
 	for (key in trans) {
 		tmp_ar[trans[key]] = key;
 	}
@@ -107,7 +107,7 @@ function loadAlbumArts(root){
 }
 
 function fillTracksList(objs, $applyOn){
-	var obj;
+	var obj = null;
 	for (obj in objs){
 		$('<li></li>')
 		.data('track', {
@@ -124,7 +124,7 @@ function fillTracksList(objs, $applyOn){
 }
 
 function fillAlbumsList(objs, $applyOn){
-	var obj;
+	var obj = null;
 	for (obj in objs){
 		var div = $('<div></div>')
 		.addClass('album_list_element')
