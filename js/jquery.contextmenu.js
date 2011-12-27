@@ -29,9 +29,9 @@
 ;(function($){
 	 var methods = {
         init : function(sel,menu,options,cond) {
-    		var cmenu = $.contextMenu.create(menu,options), self = this;
+    		var cmenu = $.contextMenu.create(menu,options);
     		return this.on('contextmenu', sel, function(e){
-    			var $this = $(this), ind;
+    			var $this = $(this), ind = null;
     			for (ind in $.contextMenu.instances){
     				$.contextMenu.instances[ind].hide();
     			}
@@ -47,12 +47,12 @@
     		});
     	},
     	initClick : function(sel,menu,options,cond) {
-    		var cmenu = $.contextMenu.create(menu,options), self = this;
+    		var cmenu = $.contextMenu.create(menu,options);
     		return this.on('click', sel, function(e){
+    			var $this = $(this), ind = null;
     			for (ind in $.contextMenu.instances){
     				$.contextMenu.instances[ind].hide();
     			}
-    			var $this = $(this), ind;
     			if (!!cond){
         			if ($this.is(cond.condition)){
         				cond.fct($this);
@@ -144,7 +144,7 @@
 				$tr = $('<tr></tr>'),
 				$td = $('<td></td>'),
 				$div = $('<div class="'+className+'"></div>'),
-				i, opt;
+				i, opt = null;
 			
 			// Each menu item is specified as either:
 			//     title:function
@@ -183,7 +183,7 @@
 			var iconStyle = (o.icon)?'background-image:url('+o.icon+');':'',
 				$div = $('<div class="'+cmenu.itemClassName+' '+o.className+((o.disabled)?' '+cmenu.disabledItemClassName:'')+'" title="'+o.title+'"></div>')
 							// If the item is disabled, don't do anything when it is clicked
-							.click(function(e){if(cmenu.isItemDisabled(this)){return false;}else{return o.onclick.call(cmenu.target,this,cmenu,e);}})
+							.click(function(e){if(cmenu.isItemDisabled(this)){return false;}return o.onclick.call(cmenu.target,this,cmenu,e);})
 							// Change the class of the item when hovered over
 							.hover( function(){ o.hoverItem.call(this,(cmenu.isItemDisabled(this))?cmenu.disabledItemHoverClassName:o.hoverClassName); }
 									,function(){ o.hoverItemOut.call(this,(cmenu.isItemDisabled(this))?cmenu.disabledItemHoverClassName:o.hoverClassName); }
@@ -246,7 +246,7 @@
 				cmenu.showShadow(pos.x,pos.y,e);
 				$c.css( {top:pos.y+"px", left:pos.x+"px", position:"absolute",zIndex:9999} )[cmenu.showTransition](cmenu.showSpeed,((cmenu.showCallback)?function(){cmenu.showCallback.call(cmenu);}:null));
 				cmenu.shown=true;
-				$(document).one('click selectablestart',null,function(){cmenu.hide()}); // Handle a single click to the document to hide the menu
+				$(document).one('click selectablestart',null,function(){cmenu.hide();}); // Handle a single click to the document to hide the menu
 			}
 		},
 		
