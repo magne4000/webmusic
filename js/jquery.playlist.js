@@ -28,6 +28,7 @@
                     	show_playlist_tab($this);
                     }
                 }
+                $this.trigger('playlistcreate');
             });
         },
         setPlaylistDiv : function( playlist_div ) {
@@ -62,6 +63,8 @@
                     }
             		data.playlist_div.playlist_div('add', track);
             		// Only one track
+            		$this.trigger('playlistadd', track);
+            		// TODO store as a plugin
                     data.store.store('add', track, data.loop);
                     if (len(tracks) === 0){ // First track, load it !
                         $this.playlist('setCurrent', track.uniqid, callback);
@@ -76,6 +79,8 @@
                         	data.randomuniqids.push(track[ind].uniqid);
                         }
             			data.playlist_div.playlist_div('add', track[ind]);
+            			$this.trigger('playlistadd', track);
+            			//TODO Store as a plugin
             			data.store.store('add', track[ind], data.loop);
                         if (trackslen === 0){ // First track, load it !
                             $this.playlist('setCurrent', track[ind].uniqid, callback);
@@ -88,6 +93,8 @@
         move : function(uniqid, after){
         	return this.each(function() {
         		var $this = $(this), data = $this.data('playlist');
+        		$this.trigger('playlistmove', uniqid, after);
+        		// TODO store as a plugin
         		data.store.store('move', uniqid, after);
         	});
         },
@@ -103,6 +110,8 @@
                         data.prevrandomuniqids = [];
                     }
                 }else{
+                	$this.trigger('playlistremove', uniqid);
+                	//TODO store as a plugin
                     data.store.store('remove', uniqid);
                     if (data.shuffle){
                     	for (x in data.uniqids){
@@ -143,6 +152,7 @@
                     soundManager.destroySound(data.loadedSID[ind]);
                 }
                 data.loadedSID = [];
+                $this.trigger('playlistempty');
             });
         },
         fetchCurrent : function(callback){

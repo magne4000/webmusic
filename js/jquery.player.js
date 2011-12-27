@@ -40,6 +40,7 @@
 						data.$loop.toggleClass('active');
 					}
 				}
+				$this.trigger('playercreate');
 			});
 		},
 		destroy : function() {
@@ -52,6 +53,7 @@
 			return this.each(function() {
 				var $this = $(this), data = $this.data('player'), current = data.playlist.playlist('getCurrentTrack');
 				if (!!current) {
+					$this.trigger('playertoggleplaypause');
 					current.togglePause();
 					data.$play.toggleClass('play pause');
 				}
@@ -61,6 +63,7 @@
 			return this.each(function() {
 				var $this = $(this), data = $this.data('player'), current = data.playlist.playlist('getCurrentTrack');
 				if (!!current) {
+					$this.trigger('playerplay');
 					current.play();
 					data.$play.removeClass('play');
 					data.$play.addClass('pause');
@@ -82,6 +85,7 @@
 		_stop : function() {
 			var $this = $(this), data = $this.data('player'), current = data.playlist.playlist('getCurrentTrack');
 			if (!!current) {
+				$this.trigger('playerstop');
 				current.stop();
 				data.$play.removeClass('pause');
 				data.$play.addClass('play');
@@ -89,9 +93,10 @@
 		},
 		next : function() {
 			return this.each(function() {
-				var $this = $(this), data = $this.data('player'), uniqid = data.playlist.playlist('getNextUniqid');;
+				var $this = $(this), data = $this.data('player'), uniqid = data.playlist.playlist('getNextUniqid');
 				$this.player('_stop');
 				if (uniqid != null) {
+					$this.trigger('playernext');
 					data.playlist.playlist('setCurrent', uniqid, function(){
 						$this.player('play');
 					});
@@ -103,6 +108,7 @@
 				var $this = $(this), data = $this.data('player'), uniqid = data.playlist.playlist('getPrevUniqid');
 				$this.player('_stop');
 				if (uniqid != null) {
+					$this.trigger('playerprev');
 					data.playlist.playlist('setCurrent', uniqid, function(){
 						$this.player('play');
 					});
@@ -112,6 +118,7 @@
 		toggleShuffle : function() {
 			return this.each(function() {
 				var $this = $(this), data = $this.data('player');
+				$this.trigger('playertoggleshuffle');
 				data.$shuffle.toggleClass('active');
 				data.playlist.playlist('toggleShuffle');
 			});
@@ -119,6 +126,7 @@
 		toggleLoop : function() {
 			return this.each(function() {
 				var $this = $(this), data = $this.data('player');
+				$this.trigger('playertoggleloop');
 				data.$loop.toggleClass('active');
 				data.playlist.playlist('toggleLoop');
 			});
