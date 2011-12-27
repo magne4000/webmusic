@@ -24,7 +24,7 @@ require_once 'app/cache.inc.php';
 <script type="text/javascript" src="js/jquery.recipient.js"></script>
 <script type="text/javascript" src="js/jquery.tooltip.js"></script>
 <script type="text/javascript" src="js/jquery.loadmask.min.js"></script>
-<script type="text/javascript" src="js/jquery.jgrowl.min.js"></script>
+<script type="text/javascript" src="js/jquery.easy.notification.js"></script>
 <script type="text/javascript" src="js/jquery.contextmenu.js"></script>
 <script type="text/javascript" src="js/jquery.fastsearch.js"></script>
 <script type="text/javascript" src="js/jquery.shortcuts.min.js"></script>
