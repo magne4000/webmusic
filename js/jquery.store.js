@@ -48,7 +48,7 @@
             	this.store('_setUniqidHead', track.uniqid);
             }
             if (!is_null(tail)){
-            	track.prev = pl[tail].uniqid
+            	track.prev = pl[tail].uniqid;
             	pl[tail].next = track.uniqid;
             }
             if(len(pl) > 0){
@@ -68,7 +68,7 @@
             return this;
         },
         move : function(uniqid, after){
-            var pl = this.store('getTracks'), i, oldhead = this.store('_getUniqidHead');
+            var pl = this.store('getTracks'), oldhead = this.store('_getUniqidHead');
 
             if (pl[uniqid].prev != null){
             	pl[pl[uniqid].prev].next = pl[uniqid].next;
@@ -119,7 +119,7 @@
             return this;
         },
         remove : function(uniqid){
-            var pl = this.store('getTracks'), i;
+            var pl = this.store('getTracks');
             if(pl[uniqid].next != null){
             	pl[pl[uniqid].next].prev = pl[uniqid].prev;
             }else{

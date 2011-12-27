@@ -32,7 +32,7 @@
         },
         setPlaylistDiv : function( playlist_div ) {
         	return this.each(function() {
-        		var $this = $(this), data = $this.data('playlist'), tracks = data.store.store('getTracks'), ind;
+        		var $this = $(this), data = $this.data('playlist'), tracks = data.store.store('getTracks'), ind = null;
         		data.playlist_div = playlist_div;
         		if(len(tracks) > 0){
         			for (ind in tracks){
@@ -93,7 +93,7 @@
         },
         remove : function( uniqid ) {
             return this.each(function() {
-                var i, $this = $(this), data = $this.data('playlist'), tracks = data.store.store('getTracks'), x;
+                var $this = $(this), data = $this.data('playlist'), tracks = data.store.store('getTracks'), x = null;
                 if (len(tracks) === 1) {
                 	// proper clean (freeing memory)
                     $this.playlist('empty');
@@ -131,7 +131,7 @@
             return this.each(function() {
             	$('#player .duration').text('00:00');
             	$('#info span').text('Waiting for a track');
-                var ind, $this = $(this), data = $this.data('playlist');
+                var ind = null, $this = $(this), data = $this.data('playlist');
                 data.playlist_div.playlist_div('empty');
                 data.store.store('empty');
                 data.currentuniqid = null;
@@ -198,7 +198,7 @@
         },
         toggleShuffle : function(){
         	return this.each(function() {
-                var $this = $(this), data = $this.data('playlist'), ind;
+                var $this = $(this), data = $this.data('playlist'), ind = null;
                 data.shuffle = !data.shuffle;
                 if (data.shuffle){
                 	for (ind in data.uniqids){
@@ -247,7 +247,7 @@
             return data.currentuniqid;
         },
         getNextUniqid : function(){
-            var data = this.data('playlist'), tracks = data.store.store('getTracks'), randno = 0, uniqid, ind;
+            var data = this.data('playlist'), tracks = data.store.store('getTracks'), randno = 0, uniqid, ind = null;
             if (data.shuffle){
             	if (data.loop && data.randomuniqids.length === 0){
             		for (ind in data.uniqids){

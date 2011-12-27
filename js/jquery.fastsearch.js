@@ -53,7 +53,7 @@
         },
         restore: function(){
         	return this.each(function() {
-        		var array, $this = $(this), data = $this.data('fastsearch');
+        		var $this = $(this), data = $this.data('fastsearch');
         		data.$recipient.find('ul').html(data.ulcache);
         		data.$recipient.find('span').remove();
         		if (!!data.spancache){
@@ -62,7 +62,7 @@
         	});
         },
         search: function(value) {
-            var array, $this = $(this), data = $this.data('fastsearch'), url = data.source;
+            var $this = $(this), data = $this.data('fastsearch'), url = data.source;
             value = value !== null ? value : $this.val();
             $.post(
                 url,
