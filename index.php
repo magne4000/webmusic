@@ -40,6 +40,29 @@ require_once 'app/cache.inc.php';
 </script>
 <script type="text/javascript" src="js/menu.js"></script>
 <script type="text/javascript" src="js/ajax.js"></script>
+<?php
+// Load plugins
+//TODO handle this with Cache
+$plugin_dir = dirname(__FILE__).'/plugins';
+if (is_dir($plugin_dir)){
+	$dir = opendir($plugin_dir);
+	while(($entry = @readdir($dir)) !== false) {
+		$current_plugin_dir = $plugin_dir.'/'.$entry;
+		if(is_dir($current_plugin_dir) && $entry != '.' && $entry != '..') {
+			if (is_dir($current_plugin_dir.'/js')){
+				$dir_plugin_js = opendir($current_plugin_dir.'/js');
+				while(($filename = @readdir($dir_plugin_js)) !== false) {
+					if (substr(strtolower($filename), -3) == '.js'){
+						echo '<script type="text/javascript" src="plugins/', $entry, '/js/', $filename, '"></script>', "\n";
+					}
+				}
+				closedir($dir_plugin_js);
+			}
+		}
+	}
+	closedir($dir);
+}
+?>
 <script type="text/javascript" src="js/init.js"></script>
 <title>Webmusic</title>
 </head>
