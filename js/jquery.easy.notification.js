@@ -16,7 +16,7 @@
 jQuery.easyNotification = function(options) {
 
 	var defaults = {
-		classname : 'notification',
+		classname : 'notification ui-widget-content ui-corner-all',
 		text : 'Notification!',
 		parent : 'body',
 		prepend : true,

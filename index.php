@@ -49,6 +49,7 @@ if (is_dir($plugin_dir)){
 	while(($entry = @readdir($dir)) !== false) {
 		$current_plugin_dir = $plugin_dir.'/'.$entry;
 		if(is_dir($current_plugin_dir) && $entry != '.' && $entry != '..') {
+			// JS
 			if (is_dir($current_plugin_dir.'/js')){
 				$dir_plugin_js = opendir($current_plugin_dir.'/js');
 				while(($filename = @readdir($dir_plugin_js)) !== false) {
@@ -57,6 +58,16 @@ if (is_dir($plugin_dir)){
 					}
 				}
 				closedir($dir_plugin_js);
+			}
+			// CSS
+			if (is_dir($current_plugin_dir.'/css')){
+				$dir_plugin_css = opendir($current_plugin_dir.'/css');
+				while(($filename = @readdir($dir_plugin_css)) !== false) {
+					if (substr(strtolower($filename), -4) == '.css'){
+						echo '<link rel="stylesheet" type="text/css" href="plugins/', $entry, '/css/', $filename, '" />', "\n";
+					}
+				}
+				closedir($dir_plugin_css);
 			}
 		}
 	}

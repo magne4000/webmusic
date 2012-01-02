@@ -1,0 +1,9 @@
+.notification {
+	padding: 5px;
+	margin: 2px;
+}
+
+.notification .close {
+	float: right;
+	cursor: pointer;
+}
