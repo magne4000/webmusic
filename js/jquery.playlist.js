@@ -79,7 +79,7 @@
                         	data.randomuniqids.push(track[ind].uniqid);
                         }
             			data.playlist_div.playlist_div('add', track[ind]);
-            			$this.trigger('playlistadd', track);
+            			$this.trigger('playlistadd', track[ind]);
             			//TODO Store as a plugin
             			data.store.store('add', track[ind], data.loop);
                         if (trackslen === 0){ // First track, load it !
