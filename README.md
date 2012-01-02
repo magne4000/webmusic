@@ -30,6 +30,20 @@ e.g. (Apache)
 
 And to generate the cache, simply access this URL on your server : http://YOURSERVER/webmusic/admin/admin.php?regenerate=1
 
+Plugins
+-------
+Each plugin must be stored into a folder under the _plugins_ directory.
+If this folder contains a _js_ directory, all .js files beneath it will be automatically loaded just before init.js.
+If it contains a _css_ folder, all .css files beneath it will be loaded after all other non-plugin css files.
+
+### Client side plugin
+...
+
+If the plugin folder contains an _init.php_ file, it will be loaded on the server side.
+
+### Server side plugin
+...
+
 License
 -------
 MIT License
