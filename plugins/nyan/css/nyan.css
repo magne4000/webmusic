@@ -1,0 +1,18 @@
+.ui-nyanbar {
+	height: 18px !important;
+	background: #fff;
+	border-color: #ddd;
+	top: -5px;
+}
+.ui-nyanbar .ui-nyanbar-body {
+	background: url(../img/nyanbar_body.gif) no-repeat;
+	width: 36px;
+	height: 21px !important;
+	border: 0;
+	top: -1px;
+}
+.ui-nyanbar #play-progress {
+	background: url(../img/nyanbar_tail.gif) repeat-x;
+	height: 18px !important;
+	width: 0;
+}

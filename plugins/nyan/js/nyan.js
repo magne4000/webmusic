@@ -1,59 +1,59 @@
 (function($) {
-	var	scbf = function(d, t) {
-		var c = d.createElement(t),
-			i = d.createElement(t),
-			s = d.getElementsByTagName(t)[0],
-			sf = 200,
-			st = 10000,
-			img = 'plugins/nyan/img',
-			up = function() {
-				$(this).animate({
-					'marginTop' : '-=10'
-				}, sf, i.down);
-			},
-			down = function() {
-				$(this).animate({
-					'marginTop' : '+=10'
-				}, sf, i.up);
-			};
+    var methods = {
+        init : function(options) {
+            return this.each(function() {
+                var $this = $(this), data = $this.data('nyanify'), k = [];
+                // If the plugin hasn't been initialized yet
+                if (!data) {
+                    $this.data('nyanify', {
+                        target : $this
+                    });
+                }
+                
+                $(document).keydown(function(e) {
+                	if (k.length > 20){
+                		k = k.splice(10, k.length);
+                	}
+            		k.push(e.keyCode);
+            		if (k.toString().indexOf("38,38,40,40,37,39,37,39,66,65") >= 0) {
+            			$this.nyanify('toggleNyanification');
+            			k = [];
+            		}
+            	});
+            });
+        },
+        destroy : function() {
+            return this.each(function() {
+                var $this = $(this), data = $this.data('nyanify');
+                $(window).off('.nyanify');
+                $this.removeData('nyanify');
+            });
+        },
+        toggleNyanification : function(){
+        	return this.each(function() {
+                var $this = $(this);
+                if ($this.is('.ui-nyanbar')){
+                	$this.removeClass('ui-nyanbar');
+                	$this.find('.ui-nyanbar-body').remove();
+                }else{
+                	$this.addClass('ui-nyanbar');
+                	$this.append('<div class="ui-nyanbar-body"></div>');
+                }
+            });
+        }
+    };
 
-		i.up = up;
-		i.down = down;
-
-		$(i).addClass('i').css({
-			'background' : 'url(' + img + '/cat.gif) 100% 0 no-repeat',
-			'height' : '100%',
-			'width' : '490px',
-			'position' : 'absolute',
-			'right' : '0'
-		});
-
-		i.up();
-
-		$(c).addClass('c').css({'background':'grey'}).hide().fadeIn(1000).animate({
-			'width' : '+=120%'
-		}, st, 'linear', function() {
-			$(this).fadeOut(function() {
-				$(this).remove();
-			});
-		}).css({
-			'position' : 'absolute',
-			'left' : '-200px',
-			'top' : '200px',
-			'z-index' : '100',
-			'width' : '350px',
-			'height' : '350px',
-			'position' : 'absolute',
-			'background' : 'url(' + img + '/trail.gif) 100% 0 repeat-x',
-		}).html(i);
-		s.parentNode.insertBefore(c, s);
-	},
-	k = [], ko = "38,38,40,40,37,39,37,39,66,65";
-	$(document).keydown(function(e) {
-		k.push(e.keyCode);
-		if (k.toString().indexOf(ko) >= 0) {
-			scbf(document, 'div');
-			k = [];
-		}
-	});
+    $.fn.nyanify = function(method) {
+        // Method calling logic
+        if (methods[method]) {
+            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === 'object' || !method) {
+            return methods.init.apply(this, arguments);
+        } else {
+            $.error('jQuery.nyanify: Method ' + method + ' does not exist');
+        }
+    };
 })(jQuery);
+$(document).ready(function() {
+	$('#bar').nyanify();
+});
