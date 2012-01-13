@@ -64,6 +64,7 @@
         search: function(value) {
             var $this = $(this), data = $this.data('fastsearch'), url = data.source;
             value = value !== null ? value : $this.val();
+            $this.trigger('fastsearchchange', value);
             $.post(
                 url,
                 {term: value},
