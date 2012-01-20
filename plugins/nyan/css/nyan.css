@@ -3,6 +3,7 @@
 	background: #fff;
 	border-color: #ddd;
 	top: -5px;
+	position: relative;
 }
 .ui-nyanbar .ui-nyanbar-body {
 	background: url(../img/nyanbar_body.gif) no-repeat;
@@ -10,6 +11,8 @@
 	height: 21px !important;
 	border: 0;
 	top: -1px;
+	position: absolute;
+	right: 0;
 }
 .ui-nyanbar #play-progress {
 	background: url(../img/nyanbar_tail.gif) repeat-x;

@@ -34,10 +34,10 @@
                 var $this = $(this);
                 if ($this.is('.ui-nyanbar')){
                 	$this.removeClass('ui-nyanbar');
-                	$this.find('.ui-nyanbar-body').remove();
+                	$this.children().find('.ui-nyanbar-body').remove();
                 }else{
                 	$this.addClass('ui-nyanbar');
-                	$this.append('<div class="ui-nyanbar-body"></div>');
+                	$this.children().append('<div class="ui-nyanbar-body"></div>');
                 }
             });
         }
