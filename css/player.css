@@ -39,7 +39,7 @@
 }
 
 #player .total-time {
-	right: 162px;
+	right: 109px;
 }
 
 #play,#prev,#next {
@@ -54,7 +54,7 @@
 	position: absolute;
 	left: 196px;
 	top: 0;
-	right: 220px;
+	right: 167px;
 }
 
 #player .duration {
@@ -70,13 +70,16 @@
 #controls2 {
 	top: 1px;
 	position: absolute;
-	right: 64px;
+	right: 11px;
 }
 
-#controls2 a {
+#controls2 a, #controls2 > div {
 	margin: 12px 2px 0 2px;
 	height: 24px;
 	width: 24px;
+	display: inline-block;
+	overflow: hidden;
+	cursor: pointer;
 }
 
 /*Btn1*/
@@ -170,6 +173,34 @@
 
 #info span.bold {
 	font-family: CandelaBold, Helvetica, sans-serif;
+}
+
+/*Volume*/
+#volume.active {
+}
+
+#volume.active #volume-max {
+	position: absolute;
+	width: 7px;
+	margin: 0 7px;
+	cursor: pointer;
+	background-color: #121212;
+	z-index: 8;
+	border-radius: 2px;
+	height: 120px;
+	border: 1px solid white;
+	bottom: 26px;
+}
+
+#volume.active #current-volume {
+	position: absolute;
+	background-color: white;
+	z-index: 9;
+	border-radius: 2px;
+	height: 0px;
+	right:0px;
+	left: 0px;
+	bottom: 0px;
 }
 
 /*Btn2*/

@@ -193,6 +193,12 @@ $(document).ready(function() {
         }
     });
     
+    $('#volume-max').on('click', function(e){
+	var volume = 1 - (e.pageY - $('#volume-max').offset().top)/$('#volume-max').height() ;
+	$player.player('setVolume', volume);
+	$('#current-volume').height($('#volume-max').height() * volume + "px");
+    });
+    
     /* Actions */
     $(document).on('hover', '.wrapper li, .album_list_element', function(){
     	$(this).find('.actionhandler').toggleClass('active_hover');

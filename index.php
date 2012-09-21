@@ -14,8 +14,8 @@ require_once 'app/cache.inc.php';
 <link rel="stylesheet" type="text/css" href="css/jquery.contextmenu.css" />
 <link rel="stylesheet" type="text/css" href="css/global.css" />
 <link rel="stylesheet" type="text/css" href="css/player.css" />
-<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.8.17.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.23.min.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/jquery.store.js"></script>
 <script type="text/javascript" src="js/jquery.playlist.div.js"></script>
