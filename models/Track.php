@@ -87,7 +87,7 @@ class Track extends BaseTrack
 		return $optionsRet;
 	}
 	
-	public static function getAll($cols = null, $filter = null, $offset = 0, $limit = 100){
+	public static function getAll($cols = null, $filter = null, $offset = 0, $limit = 1000){
 		$cols = Track::checkOptions($cols);
 		$isJoinedToAlbum = false;
 		$isJoinedToArtist = false;
