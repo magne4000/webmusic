@@ -34,6 +34,9 @@
 					data.$shuffle.click(function() {
 						$this.player('toggleShuffle');
 					});
+					data.$volume.click(function() {
+						$this.player('toggleVolume');
+					});
 					
 					loopState = data.playlist.playlist('getLoopState');
 					if (loopState){
@@ -56,6 +59,14 @@
 					$this.trigger('playertoggleplaypause');
 					current.togglePause();
 					data.$play.toggleClass('play pause');
+				}
+			});
+		},
+		setVolume : function(vol) {
+			return this.each(function() {
+				var $this = $(this), data = $this.data('player'), current = data.playlist.playlist('getCurrentTrack');
+				if (!!current) {
+					current.setVolume(vol * 100);
 				}
 			});
 		},
@@ -129,6 +140,13 @@
 				$this.trigger('playertoggleloop');
 				data.$loop.toggleClass('active');
 				data.playlist.playlist('toggleLoop');
+			});
+		},
+		toggleVolume : function() {
+			return this.each(function() {
+				var $this = $(this), data = $this.data('player');
+				$this.trigger('playertogglevolume');
+				data.$volume.toggleClass('active');
 			});
 		}
 	};
