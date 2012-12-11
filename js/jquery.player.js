@@ -67,7 +67,7 @@
 			return this.each(function() {
 				var $this = $(this), data = $this.data('player'), current = data.playlist.playlist('getCurrentTrack');
 				if (!!current) {
-					current.setVolume(vol * 100);
+					current.setVolume(vol);
 				}
 			});
 		},

@@ -186,17 +186,35 @@ $(document).ready(function() {
             $('#tooltip .body').html('...');
         }
     });
-    $('#bar').on('click', function(e){
-        var track = $playlist.playlist('getCurrentTrack');
-        if (!!track && track.readyState > 2){
-            track.setPosition((e.pageX - $('#bar').offset().left)/$('#bar').width() * track.duration);
+    
+    $('#bar').slider({
+        range: "min",
+        create: function( event, ui ) {
+            $('#bar a').remove();
+        },
+        slide: function( event, ui ) {
+            var track = $playlist.playlist('getCurrentTrack');
+            if (!!track && track.readyState > 2){
+                console.log($('#bar').slider('option', 'max'));
+                console.log($('#bar').slider('value'));
+                console.log(ui.value * 1000);
+                track.setPosition(ui.value * 1000);
+            }
         }
     });
     
-    $('#volume-max').on('click', function(e){
-        var volume = 1 - (e.pageY - $('#volume-max').offset().top)/$('#volume-max').height();
-        $player.player('setVolume', volume);
-        $('#current-volume').height($('#volume-max').height() * volume + "px");
+    /* Volume */
+    $('#volume-max').slider({
+        orientation: "vertical",
+        range: "min",
+        max: 100,
+        value: 100,
+        create: function( event, ui ) {
+            $('#volume-max a').remove();
+        },
+        slide: function( event, ui ) {
+            $player.player('setVolume', $('#volume-max').slider('value'));
+        }
     });
     
     var timeoutvolume = null;

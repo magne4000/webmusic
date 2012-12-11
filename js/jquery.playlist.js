@@ -17,7 +17,8 @@
                         shuffle : options.shuffle || false,
                         loop : options.loop || false,
                         loadedSID : [],
-                        timer: null
+                        timer: null,
+                        slidecreated: false
                     });
                     data = $this.data('playlist');
                     loopstorestate = data.store.store('getLoopState');
@@ -161,6 +162,13 @@
                 if (tracks[data.currentuniqid] !== undefined){
                     if (!!tracks[data.currentuniqid].duration){
                         $('#player .total-time').text(formatDuration(tracks[data.currentuniqid].duration));
+                        $("#bar").on("slidecreate", function( event, ui ) {
+                            data.slidecreated = true;
+                            $('#bar').slider('option', 'max', tracks[data.currentuniqid].duration);
+                        });
+                        if (data.slidecreated){
+                            $('#bar').slider('option', 'max', tracks[data.currentuniqid].duration);
+                        }
                     }
                     clearTimeout(data.timer);
                     data.timer = setTimeout(function(){
@@ -171,8 +179,7 @@
                             autoPlay: false,
                             whileplaying: function(){
                                 // Progress bar
-                                var percentPlayed = (this.position / this.durationEstimate) * 100;
-                                $('#play-progress').css( 'width', percentPlayed + "%" );
+                                $('#bar').slider('value', this.position/1000);
                                 $('#player .elapsed-time').text(formatDuration(this.position/1000));
                             },
                             onfinish: function(){
