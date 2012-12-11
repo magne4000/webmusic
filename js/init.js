@@ -195,9 +195,6 @@ $(document).ready(function() {
         slide: function( event, ui ) {
             var track = $playlist.playlist('getCurrentTrack');
             if (!!track && track.readyState > 2){
-                console.log($('#bar').slider('option', 'max'));
-                console.log($('#bar').slider('value'));
-                console.log(ui.value * 1000);
                 track.setPosition(ui.value * 1000);
             }
         }
