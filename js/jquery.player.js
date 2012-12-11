@@ -15,7 +15,8 @@
 						$prev : $(options.prevselector || '#prev'),
 						$loop : $(options.loopselector || '#loop'),
 						$shuffle : $(options.shuffleselector || '#shuffle'),
-						$volume : $(options.volumeselector || '#volume')
+						$volume : $(options.volumeselector || '#volume'),
+						$volumewrapper : $(options.volumewrapperselector || '#volume-wrapper')
 					});
 
 					data = $this.data('player');
@@ -147,6 +148,7 @@
 				var $this = $(this), data = $this.data('player');
 				$this.trigger('playertogglevolume');
 				data.$volume.toggleClass('active');
+				data.$volumewrapper.toggleClass('active');
 			});
 		}
 	};
