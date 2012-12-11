@@ -73,7 +73,7 @@
 	right: 11px;
 }
 
-#controls2 a, #controls2 > div {
+#controls2 a.control, #controls2 > div.control {
 	margin: 12px 2px 0 2px;
 	height: 24px;
 	width: 24px;
@@ -176,31 +176,52 @@
 }
 
 /*Volume*/
-#volume.active {
+#volume-wrapper, #volume-max, #current-volume {
+	display: none;
 }
 
-#volume.active #volume-max {
-	position: absolute;
+#volume-wrapper.active, #volume-wrapper.active #volume-max, #volume-wrapper.active #current-volume {
+	display: block;
+}
+
+#volume-wrapper {
+    background: #202020;
+    width: 22px;
+    z-index: 7;
+    position: absolute;
+    height: 132px;
+    bottom: 40px;
+    border-top: 2px solid white;
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+    right: 0px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+#volume-max {
+	position: relative;
 	width: 7px;
 	margin: 0 7px;
 	cursor: pointer;
 	background-color: #121212;
 	z-index: 8;
-	border-radius: 2px;
+	border-radius: 4px;
 	height: 120px;
 	border: 1px solid white;
-	bottom: 26px;
+	top: 5px;
 }
 
-#volume.active #current-volume {
+#current-volume {
 	position: absolute;
 	background-color: white;
 	z-index: 9;
-	border-radius: 2px;
+	border-radius: 4px;
 	height: 0px;
 	right:0px;
 	left: 0px;
 	bottom: 0px;
+	height: 120px;
 }
 
 /*Btn2*/
