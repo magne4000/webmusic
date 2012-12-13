@@ -150,7 +150,15 @@
 				data.$volume.toggleClass('active');
 				data.$volumewrapper.toggleClass('active');
 			});
-		}
+		},
+		hideVolume : function() {
+            return this.each(function() {
+                var $this = $(this), data = $this.data('player');
+                $this.trigger('playerhidevolume');
+                data.$volume.removeClass('active');
+                data.$volumewrapper.removeClass('active');
+            });
+        }
 	};
 
 	$.fn.player = function(method) {

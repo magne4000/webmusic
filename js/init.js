@@ -245,7 +245,7 @@ $(document).ready(function() {
         function() {
             timeoutvolume = setTimeout(function() {
                 timeoutvolume = null;
-                $player.player('toggleVolume');
+                $player.player('hideVolume');
             }, 800);
         }
     );
