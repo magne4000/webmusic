@@ -250,6 +250,38 @@ $(document).ready(function() {
         }
     );
     
+    var contentFnVol = null;
+    $('#volume-max').tooltip({
+        content: function(e, ui){
+            contentFnVol = e;
+            return $(this).text();
+        },
+        close: function(){
+            contentFnVol = null;
+        },
+        tooltipClass: "tooltip-volume",
+        position: {
+            my: "right-15 top",
+            at: "left top",
+            collision: "flipfit"
+        }
+    });
+    
+    $('#volume-max').on('mousemove', function(e){
+        if (contentFnVol) {
+            var cursorPositionRelative = Math.round((e.pageY - $('#volume-max').offset().top)),
+                cursorPosition = 100 - Math.floor((cursorPositionRelative/$('#volume-max').height()) * 100);
+            contentFnVol(cursorPosition);
+            /*Position*/
+            $('.tooltip-volume').position({
+                my: "right-15 top+" + (cursorPositionRelative - 8),
+                at: "left top",
+                of: $("#volume-max"),
+                collision: "flipfit"
+            });
+        }
+    });
+    
     /* Actions */
     $(document).on('hover', '.wrapper li, .album_list_element', function(){
     	$(this).find('.actionhandler').toggleClass('active_hover');
