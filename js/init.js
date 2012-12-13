@@ -164,26 +164,46 @@ $(document).ready(function() {
         playlist : $playlist
     });
     
-    $('#bar').tooltip({
-        track: true,
-        delay: 0,
-        showURL: false,
-        fade: 250,
-        left: -20,
-        bodyHandler: function(){}
-    });
+    var contentFn = null;
     $('#bar').on('mousemove', function(e){
-        var track = $playlist.playlist('getCurrentTrack');
-        if (!!track && track.readyState == 3){ //loaded/success
-            var cursorPosition = Math.round((e.pageX - $('#bar').offset().left)/$('#bar').width() * (track.duration/1000));
-            $('#tooltip .body').html(formatDuration(cursorPosition));
-        }else if (!!track && track.readyState == 2){
-        	console.log('Error');
-            $('#tooltip .body').html('Error');
-        }else if (!!track && track.readyState == 1){
-            $('#tooltip .body').html('Loading');
-        }else{
-            $('#tooltip .body').html('...');
+        if (contentFn) {
+            var txt = '...',
+                track = $playlist.playlist('getCurrentTrack'),
+                cursorPositionRelative = Math.round((e.pageX - $('#bar').offset().left)),
+                cursorPosition = Math.round(cursorPositionRelative/$('#bar').width() * (track.duration/1000));
+            if (!!track && track.readyState == 3){ //loaded/success
+                txt = formatDuration(cursorPosition);
+            }else if (!!track && track.readyState == 2){
+                txt = 'Error';
+            }else if (!!track && track.readyState == 1){
+                txt = 'Loading';
+            }
+            contentFn(txt);
+            
+            /*Position*/
+            $('.tooltip-bar').position({
+                my: "left+" + (cursorPositionRelative - 21) + " bottom+35",
+                at: "left bottom",
+                of: $("#bar"),
+                collision: "flip"
+            });
+        }
+    });
+    
+    $('#bar').tooltip({
+        content: function(e, ui){
+            contentFn = e;
+            return $(this).text();
+        },
+        close: function(){
+            contentFn = null;
+        },
+        tooltipClass: "tooltip-bar",
+        position: {
+            my: "left bottom+35",
+            at: "left bottom",
+            of: $("#bar"),
+            collision: "flip"
         }
     });
     

@@ -175,6 +175,16 @@
 	font-family: CandelaBold, Helvetica, sans-serif;
 }
 
+/*Tooltip*/
+
+.ui-tooltip {
+    border: 0;
+    padding: 6px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
 /*Volume*/
 #volume-wrapper, #volume-max, #current-volume {
 	display: none;
