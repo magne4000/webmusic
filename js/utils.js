@@ -110,15 +110,25 @@ function loadAlbumArts(root){
     });
 }
 
+function getTrackNameWithTrackNumberIfAvailable(track){
+    var trackno = track.trackno?track.trackno:track.t_trackno,
+        name = track.name?track.name:track.t_name;
+    if (trackno != '0'){
+        return trackno + ' - ' + name;
+    }
+    return name;
+}
+
 function fillTracksList(objs, $applyOn){
     var obj = null;
+    console.log(objs);
     for (obj in objs){
         $('<li></li>')
         .data('track', {
             id: objs[obj].t_id
         })
         .attr('title', 'Artist: ' + objs[obj].ar_artist + '\nAlbum: ' + objs[obj].al_album + '\nName: ' + objs[obj].t_name)
-        .text(objs[obj].t_name)
+        .text(getTrackNameWithTrackNumberIfAvailable(objs[obj]))
         .append('<div class="actionhandler"></div>')
         .appendTo($applyOn);
     }

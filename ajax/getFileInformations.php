@@ -24,6 +24,7 @@ if (isset($_POST['id']) && !is_array($_POST['id']) && preg_match("/^\d+$/", $_PO
 		->leftJoin('t.Genre g')
 		->leftJoin('al.Artist ar');
 	$q->whereIn('t.id', $ids);
+	$q->orderBy('ar.id, al.id, t.trackno');
 	$a = $q->fetchArray();
 	echo json_encode($a);
 }

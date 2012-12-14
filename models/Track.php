@@ -157,8 +157,6 @@ class Track extends BaseTrack
 				}
 			}
 		}
-		$isJoinedToAlbum = false;
-		$isJoinedToArtist = false;
 		if ($isJoinedToArtist){
 			$order_by[] = 'ar.name';
 		}
