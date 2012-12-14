@@ -20,7 +20,7 @@
 									.sortable({
 										update : function(event, ui) {
 											var after;
-											if (ui.item.index() == 0){
+											if (ui.item.index() === 0){
 												after = null;
 											}else{
 												after = ui.item.parent().children(':eq('+(ui.item.index() - 1)+')').attr('id');
@@ -69,7 +69,7 @@
 						.attr('id', elt.uniqid);
 						$this.find('tbody').append(s);
 						nbtracks--;
-						if (elt.next == null || nbtracks === 0){
+						if (elt.next === null || nbtracks === 0){
 							end = true;
 						}else{
 							elt = track[elt.next];

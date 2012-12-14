@@ -19,12 +19,12 @@
             });
         },
         receive : function(event, clicked_objects) {
-        	var target = event.target; // thrower
-        	if (clicked_objects){
-        		// If selectable sent event, several objects can have been selected
-        		target = clicked_objects;
-        	}
-        	// event.data.target is the recipient
+            var target = event.target; // thrower
+            if (clicked_objects){
+                // If selectable sent event, several objects can have been selected
+                target = clicked_objects;
+            }
+            // event.data.target is the recipient
             event.data.callback.call(event.data.target, target);
         },
         addListener : function(type, callback) {

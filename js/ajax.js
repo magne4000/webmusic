@@ -48,7 +48,7 @@ function getList(mode, objs, callback, $applyOn){
 		console.log(textStatus);
 		console.log(jqXHR.responseText);
 	});
-};
+}
 
 function getFileInformations(options, callback){
 	$.post('ajax/getFileInformations.php', options, function(obj){
@@ -58,7 +58,7 @@ function getFileInformations(options, callback){
 		console.log(textStatus);
 		console.log(jqXHR.responseText);
 	});
-};
+}
 
 function getAlbumArt(elt){
 	$.post('ajax/getAlbumArt.php', {albumpath:elt.data('album').path}, function(obj){
@@ -68,6 +68,6 @@ function getAlbumArt(elt){
 	}, "json")
 	.error(function(jqXHR, textStatus){
 		console.log(textStatus);
-		console.log(jqXHR.responseText);
-	});
-};
+        console.log(jqXHR.responseText);
+    });
+}

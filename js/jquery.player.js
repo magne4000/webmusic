@@ -107,7 +107,7 @@
 			return this.each(function() {
 				var $this = $(this), data = $this.data('player'), uniqid = data.playlist.playlist('getNextUniqid');
 				$this.player('_stop');
-				if (uniqid != null) {
+				if (uniqid !== null) {
 					$this.trigger('playernext');
 					data.playlist.playlist('setCurrent', uniqid, function(){
 						$this.player('play');
@@ -119,7 +119,7 @@
 			return this.each(function() {
 				var $this = $(this), data = $this.data('player'), uniqid = data.playlist.playlist('getPrevUniqid');
 				$this.player('_stop');
-				if (uniqid != null) {
+				if (uniqid !== null) {
 					$this.trigger('playerprev');
 					data.playlist.playlist('setCurrent', uniqid, function(){
 						$this.player('play');

@@ -22,7 +22,7 @@
                     });
                     data = $this.data('playlist');
                     loopstorestate = data.store.store('getLoopState');
-                    if (loopstorestate != null){
+                    if (loopstorestate !== null){
                         data.loop = loopstorestate;
                     }
                     if (len(data.store.store('getTracks')) > 0){
@@ -281,7 +281,7 @@
                 data.randomuniqids.splice(randno, 1);
                 return uniqid;
             }
-            if (tracks[data.currentuniqid].next == null) return null;
+            if (tracks[data.currentuniqid].next === null) return null;
             return tracks[tracks[data.currentuniqid].next].uniqid;
         },
         getPrevUniqid : function(){
@@ -290,7 +290,7 @@
                 data.randomuniqids.push(data.prevrandomuniqids.pop());
                 return data.prevrandomuniqids[data.prevrandomuniqids.length-1];
             }
-            if (tracks[data.currentuniqid].prev == null) return null;
+            if (tracks[data.currentuniqid].prev === null) return null;
             return tracks[tracks[data.currentuniqid].prev].uniqid;
         },
         size : function(){
