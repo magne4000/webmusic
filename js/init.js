@@ -288,29 +288,13 @@ $(document).ready(function() {
     });
     
     /* Shortcuts */
-    $.Shortcuts.add({
-        type: 'hold',
-        mask: 'Space',
-        handler: function() {
-            $player.player('togglePlayPause');
-        },
-        list: 'player'
+    $(document).on('keydown.space', function() {
+        $player.player('togglePlayPause');
     });
-    $.Shortcuts.add({
-        type: 'hold',
-        mask: 'Ctrl+Right',
-        handler: function() {
-            $player.player('next');
-        },
-        list: 'player'
+    $(document).on('keydown.ctrl_right', function() {
+        $player.player('next');
     });
-    $.Shortcuts.add({
-        type: 'hold',
-        mask: 'Ctrl+Left',
-        handler: function() {
-            $player.player('prev');
-        },
-        list: 'player'
+    $(document).on('keydown.ctrl_left', function() {
+        $player.player('prev');
     });
-    $.Shortcuts.start('player');
 });

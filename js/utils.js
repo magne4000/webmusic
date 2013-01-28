@@ -121,7 +121,6 @@ function getTrackNameWithTrackNumberIfAvailable(track){
 
 function fillTracksList(objs, $applyOn){
     var obj = null;
-    console.log(objs);
     for (obj in objs){
         $('<li></li>')
         .data('track', {

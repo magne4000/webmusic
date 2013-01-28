@@ -7,14 +7,14 @@ require_once 'app/cache.inc.php';
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
-<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.9.2.custom.css" />
+<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.0.custom.css" />
 <link rel="stylesheet" type="text/css" href="css/jquery.loadmask.css" />
 <link rel="stylesheet" type="text/css" href="css/jquery.jgrowl.css" />
 <link rel="stylesheet" type="text/css" href="css/jquery.contextmenu.css" />
 <link rel="stylesheet" type="text/css" href="css/global.css" />
 <link rel="stylesheet" type="text/css" href="css/player.css" />
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.9.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.10.0.min.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/jquery.store.js"></script>
 <script type="text/javascript" src="js/jquery.playlist.div.js"></script>
@@ -25,7 +25,7 @@ require_once 'app/cache.inc.php';
 <script type="text/javascript" src="js/jquery.easy.notification.js"></script>
 <script type="text/javascript" src="js/jquery.contextmenu.js"></script>
 <script type="text/javascript" src="js/jquery.fastsearch.js"></script>
-<script type="text/javascript" src="js/jquery.shortcuts.min.js"></script>
+<script type="text/javascript" src="js/jquery.hotkeys.js"></script>
 <script type="text/javascript" src="js/soundmanager2<?php if(!Config::get('debug', 'debug')){echo '-nodebug';} ?>-jsmin.js"></script>
 <script type="text/javascript">
 //<![CDATA[
