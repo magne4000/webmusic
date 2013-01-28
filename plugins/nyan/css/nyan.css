@@ -8,14 +8,15 @@
 .ui-nyanbar .ui-nyanbar-body {
 	background: url(../img/nyanbar_body.gif) no-repeat;
 	width: 36px;
-	height: 21px !important;
+	height: 20px !important;
 	border: 0;
 	top: -1px;
 	position: absolute;
-	right: 0;
+	right: -18px;
+	border-radius: 8px;
 }
-.ui-nyanbar #play-progress {
-	background: url(../img/nyanbar_tail.gif) repeat-x;
+.ui-nyanbar .ui-slider-range {
+	background: url(../img/nyanbar_tail.gif) repeat-x !important;
 	height: 18px !important;
 	width: 0;
 }
