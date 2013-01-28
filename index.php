@@ -83,7 +83,7 @@ if (is_dir($plugin_dir)){
 		<div id="left_pane" class="ui-widget ui-widget-content">
 			<div id="search">
 				<p>
-					<input id="input_artist" type="text" placeholder="Quick artist search" autocomplete="off" />
+					<input id="input_artist" type="search" placeholder="Quick artist search" autocomplete="off" autofocus />
 				</p>
 			</div>
 			<div class="wrapper">

@@ -18,7 +18,7 @@
                     data = $this.data('fastsearch');
                 }
                 
-                $this.on( "keyup.fastsearch", function( event ) {
+                $this.on( "keyup", function( event ) {
                     var keyCode = $.ui.keyCode;
                     switch( event.which ) {
                         case keyCode.TAB:
