@@ -45,4 +45,21 @@ class Album extends BaseAlbum
 		
 		return $q->fetchArray();
 	}
+	
+	public static function getUnique(Artist $artist, $name, $insert_if_not_exists=false){
+	    $q = Doctrine_Query::create()
+	    ->select('al.id')
+	    ->from('Album al')
+	    ->where('al.name = ?', $name)
+	    ->where('al.artist_id = ?', $artist->id);
+	    $ret = $q->fetchOne();
+	    if ($insert_if_not_exists && !$ret){
+	        $a = new Album();
+	        $a->name = $name;
+	        $a->Artist = $artist;
+	        $a->save();
+	        $ret = $a;
+	    }
+	    return $ret;
+	}
 }

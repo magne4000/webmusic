@@ -63,6 +63,21 @@ class Artist extends BaseArtist
 		return $q;
 	}
 	
+	public static function getUnique($name, $insert_if_not_exists=false){
+	    $q = Doctrine_Query::create()
+	    ->select('ar.id')
+	    ->from('Artist ar')
+	    ->where('ar.name = ?', $name);
+	    $ret = $q->fetchOne();
+	    if ($insert_if_not_exists && !$ret){
+	        $a = new Artist();
+	        $a->name = $name;
+	        $a->save();
+	        $ret = $a;
+	    }
+	    return $ret;
+	}
+	
 	public static function getAll($filter = null){
 		$q = self::_getAll($filter);
 		return $q->fetchArray();

@@ -7,6 +7,15 @@ password=bar
 host=localhost
 ; DB name
 database=rivplayer
+; timezone
+timezone="Europe/Paris"
+
+[scanner]
+; Path where music files are contained
+root=
+root_url=
+; Whitelist of extensions which will be added to the database (separated by commas)
+ext="mp3,ogg"
 
 [debug]
 debug=off
@@ -16,8 +25,8 @@ debug=off
 maxitems=1000
 
 [soundmanager]
-url = "swf/"
-flashVersion = 9
-useFlashBlock = false
-useHTML5Audio = true
-preferFlash = false
+url="swf/"
+flashVersion=9
+useFlashBlock=false
+useHTML5Audio=true
+preferFlash=false

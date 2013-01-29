@@ -1,13 +1,4 @@
-<?php
-//Not secured for the moment (pretty useless to secure the cache generation ...)
-require_once "../app/utils.php";
-$message = null;
-if (isset($_GET['regenerate']) && $_GET['regenerate']){
-	require "../app/cache.inc.php";
-	Cache::generateMenu();
-	$message = "Menu regénéré.";
-}
-?>
+<?php require "handle.php"; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

@@ -61,4 +61,19 @@ class Genre extends BaseGenre
 		
 		return $q->fetchArray();
 	}
+	
+	public static function getUnique($name, $insert_if_not_exists=false){
+	    $q = Doctrine_Query::create()
+	    ->select('g.id')
+	    ->from('Genre g')
+	    ->where('g.name = ?', $name);
+	    $ret = $q->fetchOne();
+	    if ($insert_if_not_exists && !$ret){
+	        $a = new Genre();
+	        $a->name = $name;
+	        $a->save();
+	        $ret = $a;
+	    }
+	    return $ret;
+	}
 }

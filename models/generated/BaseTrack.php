@@ -39,6 +39,14 @@ abstract class BaseTrack extends Doctrine_Record
              'primary' => true,
              'autoincrement' => true,
              ));
+        $this->hasColumn('path', 'string', null, array(
+            'type' => 'string',
+            'fixed' => false,
+            'unsigned' => false,
+            'primary' => false,
+            'notnull' => true,
+            'autoincrement' => false,
+            ));
         $this->hasColumn('uripath', 'string', null, array(
              'type' => 'string',
              'fixed' => false,
@@ -119,6 +127,14 @@ abstract class BaseTrack extends Doctrine_Record
              'notnull' => false,
              'autoincrement' => false,
              ));
+        $this->hasColumn('last_updated', 'datetime', null, array(
+            'type' => 'datetime',
+            'fixed' => false,
+            'unsigned' => false,
+            'primary' => false,
+            'notnull' => false,
+            'autoincrement' => false
+            ));
     }
 
     public function setUp()
