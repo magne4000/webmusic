@@ -164,47 +164,30 @@ $(document).ready(function() {
         playlist : $playlist
     });
     
-    var contentFn = null;
-    $('#bar').on('mousemove', function(e){
-        if (contentFn) {
-            var txt = '...',
-                track = $playlist.playlist('getCurrentTrack'),
-                cursorPositionRelative = Math.round((e.pageX - $('#bar').offset().left)),
-                cursorPosition = Math.round(cursorPositionRelative/$('#bar').width() * (track.duration/1000));
-            if (!!track && track.readyState == 3){ //loaded/success
-                txt = formatDuration(cursorPosition);
-            }else if (!!track && track.readyState == 2){
-                txt = 'Error';
-            }else if (!!track && track.readyState == 1){
-                txt = 'Loading';
-            }
-            contentFn(txt);
-            
-            /*Position*/
-            $('.tooltip-bar').position({
-                my: "left+" + (cursorPositionRelative - 21) + " bottom+35",
-                at: "left bottom",
-                of: $("#bar"),
-                collision: "flip"
-            });
-        }
-    });
+    // Tooltip
+    Opentip.styles.myStyle = {
+        // Make it look like the alert style. If you omit this, it will default to "standard"
+        extends: "dark",
+        // Tells the tooltip to be fixed and be attached to the trigger, which is the default target
+        background: "#202020",
+        borderRadius: 5
+    };
+    var tooltipBar = new Opentip("#bar", { style: "myStyle", tipJoint: "bottom", offset: [2, 15] });
+    var tooltipVol = new Opentip("#volume-max", { style: "myStyle", tipJoint: "right", offset: [10, 0] });
     
-    $('#bar').tooltip({
-        content: function(e, ui){
-            contentFn = e;
-            return $(this).text();
-        },
-        close: function(){
-            contentFn = null;
-        },
-        tooltipClass: "tooltip-bar",
-        position: {
-            my: "left bottom+35",
-            at: "left bottom",
-            of: $("#bar"),
-            collision: "flip"
+    $('#bar').on('mousemove', function(e){
+        var txt = '...',
+            track = $playlist.playlist('getCurrentTrack'),
+            cursorPositionRelative = Math.round((e.pageX - $('#bar').offset().left)),
+            cursorPosition = Math.round(cursorPositionRelative/$('#bar').width() * (track.duration/1000));
+        if (!!track && track.readyState == 3){ //loaded/success
+            txt = formatDuration(cursorPosition);
+        }else if (!!track && track.readyState == 2){
+            txt = 'Error';
+        }else if (!!track && track.readyState == 1){
+            txt = 'Loading';
         }
+        tooltipBar.setContent(txt);
     });
     
     $('#bar').slider({
@@ -250,36 +233,17 @@ $(document).ready(function() {
         }
     );
     
-    var contentFnVol = null;
-    $('#volume-max').tooltip({
-        content: function(e, ui){
-            contentFnVol = e;
-            return $(this).text();
-        },
-        close: function(){
-            contentFnVol = null;
-        },
-        tooltipClass: "tooltip-volume",
-        position: {
-            my: "right-15 top",
-            at: "left top",
-            collision: "flipfit"
-        }
-    });
-    
     $('#volume-max').on('mousemove', function(e){
-        if (contentFnVol) {
-            var cursorPositionRelative = Math.round((e.pageY - $('#volume-max').offset().top)),
-                cursorPosition = 100 - Math.floor((cursorPositionRelative/$('#volume-max').height()) * 100);
-            contentFnVol(cursorPosition);
-            /*Position*/
-            $('.tooltip-volume').position({
-                my: "right-15 top+" + (cursorPositionRelative - 8),
-                at: "left top",
-                of: $("#volume-max"),
-                collision: "flipfit"
-            });
-        }
+        var cursorPositionRelative = Math.round((e.pageY - $('#volume-max').offset().top)),
+            cursorPosition = 100 - Math.floor((cursorPositionRelative/$('#volume-max').height()) * 100);
+        tooltipVol.setContent(cursorPosition);
+        /*Position*/
+        $('.tooltip-volume').position({
+            my: "right-15 top+" + (cursorPositionRelative - 8),
+            at: "left top",
+            of: $("#volume-max"),
+            collision: "flipfit"
+        });
     });
     
     /* Actions */
