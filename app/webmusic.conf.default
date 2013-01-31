@@ -11,8 +11,9 @@ database=rivplayer
 timezone="Europe/Paris"
 
 [scanner]
-; Path where music files are contained
+; Path where music files are contained (e.g. root="/home/user/music")
 root=
+; URL pointing to root (e.g. root_url="http://mydomain.com/music")
 root_url=
 ; Whitelist of extensions which will be added to the database (separated by commas)
 ext="mp3,ogg"
