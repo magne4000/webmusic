@@ -11,6 +11,7 @@ require_once 'app/cache.inc.php';
 <link rel="stylesheet" type="text/css" href="css/jquery.loadmask.css" />
 <link rel="stylesheet" type="text/css" href="css/jquery.jgrowl.css" />
 <link rel="stylesheet" type="text/css" href="css/jquery.contextmenu.css" />
+<link rel="stylesheet" type="text/css" href="css/opentip.css" />
 <link rel="stylesheet" type="text/css" href="css/global.css" />
 <link rel="stylesheet" type="text/css" href="css/player.css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -26,6 +27,7 @@ require_once 'app/cache.inc.php';
 <script type="text/javascript" src="js/jquery.contextmenu.js"></script>
 <script type="text/javascript" src="js/jquery.fastsearch.js"></script>
 <script type="text/javascript" src="js/jquery.hotkeys.js"></script>
+<script type="text/javascript" src="js/opentip-jquery.js"></script>
 <script type="text/javascript" src="js/soundmanager2<?php if(!Config::get('debug', 'debug')){echo '-nodebug';} ?>-jsmin.js"></script>
 <script type="text/javascript">
 //<![CDATA[
