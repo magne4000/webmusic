@@ -38,7 +38,7 @@ function loadAjaxMenuTimer(i){
 			var jHtml = $(html);
 			jHtml.appendTo(ulMenu.get());
 			i+=1;
-			setTimeout("loadAjaxMenuTimer("+i+")",100);
+			setTimeout(function(){loadAjaxMenuTimer(i);},100);
 		}else{
 			ulMenu.unmask();
 		}

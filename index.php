@@ -79,9 +79,9 @@ if (is_dir($plugin_dir)){
 </head>
 <body>
 	<div id="body">
-		<div id="header">
+		<header>
 			Webmusic
-		</div>
+		</header>
 		<div id="left_pane" class="ui-widget ui-widget-content">
 			<div id="search">
 				<p>
@@ -115,8 +115,8 @@ if (is_dir($plugin_dir)){
 		</div>
 		<div class="push"></div>
 	</div>
-	<div id="footer">
+	<footer>
 		<?php include 'player.html'; ?>
-	</div>
+	</footer>
 </body>
 </html>

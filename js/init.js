@@ -172,7 +172,7 @@ $(document).ready(function() {
         background: "#202020",
         borderRadius: 5
     };
-    var tooltipBar = new Opentip("#bar", { style: "myStyle", tipJoint: "bottom", offset: [2, 15] });
+    var tooltipBar = new Opentip("#bar", { style: "myStyle", tipJoint: "bottom", offset: [2, 13] });
     var tooltipVol = new Opentip("#volume-max", { style: "myStyle", tipJoint: "right", offset: [10, 0] });
     
     $('#bar').on('mousemove', function(e){
