@@ -18,6 +18,11 @@ if (isset($_POST['id']) && !is_array($_POST['id']) && preg_match("/^\d+$/", $_PO
 }elseif (isset($_POST['ids']) && is_array($_POST['ids'])){
 	// Get informations of several files
 	$ids = $_POST['ids'];
+	foreach($ids as $id){
+	    if (!preg_match("/^\d+$/", $id)){
+	        return;
+	    }
+	}
 	$q = Doctrine_Core::getTable('Track')
 		->createQuery('t')
 		->leftJoin('t.Album al')

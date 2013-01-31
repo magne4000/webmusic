@@ -1,6 +1,11 @@
 <?php
+//TODO only admin
 if (isset($_GET['scan']) && $_GET['scan']){
-
+    require_once "../../app/include.php";
+    require_once "../../app/utils.php";
+    require_once "../../app/yield.php";
+    require_once "../../getid3/getid3.php";
+    
     function clean_tag($tag, $allow_none=false, $type='string', $default=null, $max_len=1024){
         if (is_null($default) && !$allow_none){
             if ($type == "string"){
@@ -60,8 +65,10 @@ if (isset($_GET['scan']) && $_GET['scan']){
         $trackno = clean_tag(get_first($info['comments'], 'track_number'), false, 'integer');
         if ($order == 'insert'){
             insert_db($path, $uripath, $name, $artist, $genre, $album, $duration, $year, $bitrate, $frequency, $trackno);
+            yield("$uripath inserted into database");
         }elseif ($order == 'update'){
             update_db($path, $uripath, $name, $artist, $genre, $album, $duration, $year, $bitrate, $frequency, $trackno);
+            yield("$uripath updated");
         }else{
             throw new Exception('Invalid order "' . $order . '". Authorized values are "insert" and "update".');
         }
@@ -105,6 +112,7 @@ if (isset($_GET['scan']) && $_GET['scan']){
         if (!empty($ids)){
             $delete = Doctrine::getTable('Track')->findBy('id', $ids);
             $delete->delete();
+            yield("Outdated entries deleted from database.");
         }
     }
 
@@ -144,4 +152,5 @@ if (isset($_GET['scan']) && $_GET['scan']){
         }
     }
     delete_from_db($current_tracks);
+    yield("Done.");
 }
