@@ -35,8 +35,7 @@ ulMenu = new ULMenu();
 function loadAjaxMenuTimer(i){
 	$.post("ajax/getMenu.php", {i : i}, function(html) {
 		if (html != '0'){
-			var jHtml = $(html);
-			jHtml.appendTo(ulMenu.get());
+			ulMenu.get().append(html);
 			i+=1;
 			setTimeout(function(){loadAjaxMenuTimer(i);},100);
 		}else{
