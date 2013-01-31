@@ -3,6 +3,8 @@ $(document).ready(function() {
     
     $("button.progress").click(function(){
         var $this = $(this);
+        $this.next('.progress').html('');
+        $this.attr('disabled', '');
         $.ajax({
             type: "GET",
             url: $this.data('href'),
@@ -13,6 +15,8 @@ $(document).ready(function() {
                 console.log("ajax error");
                 console.log(e);
             }
+        }).always(function(){
+            $this.removeAttr('disabled');
         });
     });
 });
