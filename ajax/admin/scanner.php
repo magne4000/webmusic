@@ -145,14 +145,16 @@ if (isset($_GET['scan']) && $_GET['scan']){
     foreach ($it as $fileObject){
         $path = str_replace('\\', '/', $fileObject->getPathname());
         if (is_file($path) && in_array(substr(strrchr($path,'.'), 1), $ext)){
-            $info = $getID3->analyze($path);
             $mtime = filemtime($path);
-            getid3_lib::CopyTagsToComments($info);
             if (array_key_exists($path, $current_tracks)){
                 if ($current_tracks[$path]['timestamp'] < $mtime){
+                    $info = $getID3->analyze($path);
+                    getid3_lib::CopyTagsToComments($info);
                     prepare_write_to_db($info, 'update');
                 }
             }else{
+                $info = $getID3->analyze($path);
+                getid3_lib::CopyTagsToComments($info);
                 prepare_write_to_db($info, 'insert');
             }
             unset($current_tracks[$path]);
