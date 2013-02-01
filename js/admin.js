@@ -11,6 +11,9 @@ $(document).ready(function() {
             url: $this.data('href'),
             progress: function(update){
                 $this.next('.progress').append(update);
+                $this.next('.progress').animate({
+                    scrollTop: $this.next('.progress').get(0).scrollHeight
+                }, 200);
             },
             error: function(_, __, e) {
                 console.log("ajax error");
