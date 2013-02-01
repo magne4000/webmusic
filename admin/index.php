@@ -18,6 +18,7 @@ if (isset($_POST['user']) && isset($_POST['password'])){
 <script type="text/javascript" src="../js/utils.js"></script>
 <script type="text/javascript" src="../js/jquery.store.js"></script>
 <script type="text/javascript" src="../js/admin.js"></script>
+<title>Webmusic - Administration</title>
 </head>
 <body>
 	<header>Webmusic - Administration</header>
