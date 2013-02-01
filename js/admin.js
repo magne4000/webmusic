@@ -1,10 +1,11 @@
 $(document).ready(function() {
     $('#body2_wrapper .pane').tabs();
+    $('#login, button.progress').button();
     
     $("button.progress").click(function(){
         var $this = $(this);
         $this.next('.progress').html('');
-        $this.attr('disabled', '');
+        $this.button('option', 'disabled', true);
         $.ajax({
             type: "GET",
             url: $this.data('href'),
@@ -16,7 +17,7 @@ $(document).ready(function() {
                 console.log(e);
             }
         }).always(function(){
-            $this.removeAttr('disabled');
+            $this.button('option', 'disabled', false);
         });
     });
 });

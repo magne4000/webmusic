@@ -154,3 +154,15 @@ function fillAlbumsList(objs, $applyOn){
     }
     loadAlbumArts($applyOn);
 }
+
+function showError(msg){
+    msg = '<div class="ui-state-error ui-corner-all">'+
+            '<p>'+msg+'</p>'+
+          '</div>';
+    $.easyNotification({
+        classname : 'notification error ui-widget',
+        text: msg,
+        parent: "#body2",
+        closeText: false
+    });
+}

@@ -31,3 +31,9 @@ flashVersion=9
 useFlashBlock=false
 useHTML5Audio=true
 preferFlash=false
+
+[admin]
+; User and password in order to connect to the administration page
+; If no user is supplied, administration page is deactivated
+user=
+password=

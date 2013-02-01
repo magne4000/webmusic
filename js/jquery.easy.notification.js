@@ -1,7 +1,7 @@
 /*
- *     Easy Notification - jQuery plugin
+ *    Easy Notification - jQuery plugin
  *    written by Alen Grakalic
- *  modified by Joël Charles
+ *    modified by Joël Charles
  *    http://cssglobe.com
  *
  *    Copyright (c) 2011 Alen Grakalic (http://cssglobe.com)
@@ -10,7 +10,6 @@
  *
  *    Built for jQuery library
  *    http://jquery.com
- *
  */
 
 jQuery.easyNotification = function(options) {
@@ -89,9 +88,11 @@ jQuery.easyNotification = function(options) {
     function show() {
         clearTimeout(timeout);
         obj = $('<div class="' + options.classname + '">' + options.text + '</div>');
-        $('<span class="' + options.closeClassName + '">' + options.closeText + '</span>').click(function() {
-            destroy();
-        }).appendTo(obj);
+        if (options.closeText){
+            $('<span class="' + options.closeClassName + '">' + options.closeText + '</span>').click(function() {
+                destroy();
+            }).appendTo(obj);
+        }
         if (options.sibling !== '') {
             if (options.before) {
                 $(obj).hide().insertBefore(options.sibling).fadeIn('fast');
