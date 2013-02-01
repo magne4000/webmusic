@@ -164,7 +164,11 @@ class Track extends BaseTrack
 			$order_by[] = 'al.name';
 		}
 		$order_by[] = 't.trackno';
-		$q->orderBy(implode(', ', $order_by))->limit($limit)->offset($offset);
+		
+		$q->orderBy(implode(', ', $order_by));
+		if ($offset != null && $limit != null){
+		    $q->limit($limit)->offset($offset);
+		}
 		
 		return $q->execute(array(), Doctrine_Core::HYDRATE_SCALAR);
 	}

@@ -120,14 +120,19 @@ if (isset($_GET['scan']) && $_GET['scan']){
 
     //Getting current database state
     yield("Retrieving database state.");
-    $tracks = Doctrine::getTable('Track')->findAll();
+    $optionsRet = array(
+            "path" => "path",
+            "id" => "id",
+            "last_updated" => "last_updated"
+    );
+    $tracks = Track::getAll($optionsRet, null, null, null);
     yield("Database state retrieved.");
     $current_tracks = array();
     foreach($tracks as $track){
-        $d = new DateTime($track->last_updated);
-        $current_tracks[$track->path] = array(
+        $d = new DateTime($track['t_last_updated']);
+        $current_tracks[$track['t_path']] = array(
             'timestamp' => $d->getTimestamp(),
-            'id' => $track->id
+            'id' => $track['t_id']
         );
     }
     //Recursive scan of the directory to update database
