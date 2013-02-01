@@ -119,7 +119,9 @@ if (isset($_GET['scan']) && $_GET['scan']){
     set_time_limit(0);
 
     //Getting current database state
+    yield("Retrieving database state.");
     $tracks = Doctrine::getTable('Track')->findAll();
+    yield("Database state retrieved.");
     $current_tracks = array();
     foreach($tracks as $track){
         $d = new DateTime($track->last_updated);
