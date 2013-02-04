@@ -51,8 +51,7 @@ if (isset($_GET['scan']) && $_GET['scan']){
         return $root_url . str_replace($root, "", $path);
     }
 
-    function prepare_write_to_db($info, $order='insert'){
-        $path = clean_tag(get_first($info, 'filenamepath'));
+    function prepare_write_to_db($path, $info, $order='insert'){
         $uripath = geturipath($path);
         $name = clean_tag(get_first($info['comments'], 'title'));
         $artist = clean_tag(get_first($info['comments'], 'artist'));
@@ -115,6 +114,24 @@ if (isset($_GET['scan']) && $_GET['scan']){
             yield("Outdated entries deleted from database.");
         }
     }
+    
+    function delete_old_albums(){
+        $q = Doctrine_Query::create()
+            ->select()
+            ->from('Album a')
+            ->where('NOT EXISTS (SELECT t.id FROM Track t WHERE t.album_id = a.id)');
+        $rs = $q->execute();
+        $rs->delete();
+    }
+    
+    function delete_old_artists(){
+        $q = Doctrine_Query::create()
+            ->select()
+            ->from('Artist ar')
+            ->where('NOT EXISTS (SELECT al.id FROM Album al WHERE al.artist_id = ar.id)');
+        $rs = $q->execute();
+        $rs->delete();
+    }
 
     set_time_limit(0);
 
@@ -150,16 +167,18 @@ if (isset($_GET['scan']) && $_GET['scan']){
                 if ($current_tracks[$path]['timestamp'] < $mtime){
                     $info = $getID3->analyze($path);
                     getid3_lib::CopyTagsToComments($info);
-                    prepare_write_to_db($info, 'update');
+                    prepare_write_to_db($path, $info, 'update');
                 }
             }else{
                 $info = $getID3->analyze($path);
                 getid3_lib::CopyTagsToComments($info);
-                prepare_write_to_db($info, 'insert');
+                prepare_write_to_db($path, $info, 'insert');
             }
             unset($current_tracks[$path]);
         }
     }
     delete_from_db($current_tracks);
+    delete_old_albums();
+    delete_old_artists();
     yield("Done.");
 }
