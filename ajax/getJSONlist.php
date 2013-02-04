@@ -1,5 +1,5 @@
 <?php
-require_once "../app/include.php";
+require_once dirname(__FILE__)."/../app/include.php";
 $arRetour = array();
 $filters = array();
 if (isset($_POST['filters']) && is_array($_POST['filters'])){

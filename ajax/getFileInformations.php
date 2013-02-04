@@ -2,7 +2,7 @@
 /*
  * Informations on a track
  */
-require_once "../app/include.php";
+require_once dirname(__FILE__)."/../app/include.php";
 //header('Content-Type: text/html; charset=UTF-8');
 if (isset($_POST['id']) && !is_array($_POST['id']) && preg_match("/^\d+$/", $_POST['id'])){
 	// Get informations of one file

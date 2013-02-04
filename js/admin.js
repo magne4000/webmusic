@@ -4,15 +4,15 @@ $(document).ready(function() {
     
     $("button.progress").click(function(){
         var $this = $(this);
-        $this.next('.progress').html('');
-        $this.button('option', 'disabled', true);
+        $this.nextAll('.progress-recipient').html('');
+        $('button.progress').button('option', 'disabled', true);
         $.ajax({
             type: "GET",
             url: $this.data('href'),
             progress: function(update){
-                $this.next('.progress').append(update);
-                $this.next('.progress').animate({
-                    scrollTop: $this.next('.progress').get(0).scrollHeight
+                $this.nextAll('.progress-recipient').append(update);
+                $this.nextAll('.progress-recipient').animate({
+                    scrollTop: $this.nextAll('.progress-recipient').get(0).scrollHeight
                 }, 200);
             },
             error: function(_, __, e) {
@@ -20,7 +20,7 @@ $(document).ready(function() {
                 console.log(e);
             }
         }).always(function(){
-            $this.button('option', 'disabled', false);
+            $('button.progress').button('option', 'disabled', false);
         });
     });
 });

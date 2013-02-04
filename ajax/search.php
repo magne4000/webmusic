@@ -1,6 +1,6 @@
 <?php
 if (!isset($_GET['type']) || !isset($_POST['term'])) exit;
-require_once "../app/include.php";
+require_once dirname(__FILE__)."/../app/include.php";
 $type = $_GET['type'];
 $arRetour = array();
 if ($type == 'artist' || $type == 'album' || $type == 'track'){

@@ -2,8 +2,8 @@
 /*
  * Retrieve an album art. Return default album art if none is found.
  */
-require_once "../app/include.php";
-require_once "../app/utils.php";
+require_once dirname(__FILE__)."/../app/include.php";
+require_once dirname(__FILE__)."/../app/utils.php";
 //header('Content-Type: text/html; charset=UTF-8');
 if (isset($_POST['albumpath'])){
 	$albumpath = $_POST['albumpath'];

@@ -1,7 +1,7 @@
 <?php
-require_once 'app/include.php';
-require_once 'app/utils.php';
-require_once 'app/cache.inc.php';
+require_once dirname(__FILE__).'/app/include.php';
+require_once dirname(__FILE__).'/app/utils.php';
+require_once dirname(__FILE__).'/app/cache.inc.php';
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>

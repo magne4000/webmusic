@@ -1,6 +1,6 @@
 <?php
-require_once "login.php";
-require_once "../app/utils.php";
+require_once dirname(__FILE__)."/login.php";
+require_once dirname(__FILE__)."/../app/utils.php";
 if (isset($_POST['user']) && isset($_POST['password'])){
     login($_POST['user'], $_POST['password']);
 }
@@ -33,13 +33,14 @@ if (isset($_POST['user']) && isset($_POST['password'])){
 				<div id="tabs-cache">
 					<div class="container">
 						<button class="progress" data-href="<?php echo get_current_rel_url(); ?>../ajax/admin/cache.php?cache=1">Regénérer le menu</button>
-						<pre class="progress"></pre>
+						<pre class="progress-recipient"></pre>
 					</div>
 				</div>
 				<div id="tabs-db">
 					<div class="container">
-						<button class="progress" data-href="<?php echo get_current_rel_url(); ?>../ajax/admin/scanner.php?scan=1">Mise à jour de la base de données</button>
-						<pre class="progress"></pre>
+						<button class="progress" data-href="<?php echo get_current_rel_url(); ?>../ajax/admin/scanner.php?action=scan">Mettre à jour la base de données</button>
+						<button class="progress" data-href="<?php echo get_current_rel_url(); ?>../ajax/admin/scanner.php?action=empty">Vider la base de données</button>
+						<pre class="progress-recipient"></pre>
 					</div>
 				</div>
 			</div>
