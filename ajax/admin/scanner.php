@@ -5,6 +5,7 @@ if (isset($_GET['scan']) && $_GET['scan']){
     require_once "../../app/utils.php";
     require_once "../../app/yield.php";
     require_once "../../getid3/getid3.php";
+    require_once "../../app/cache.inc.php";
     
     function clean_tag($tag, $allow_none=false, $type='string', $default=null, $max_len=1024){
         if (is_null($default) && !$allow_none){
@@ -180,5 +181,7 @@ if (isset($_GET['scan']) && $_GET['scan']){
     delete_from_db($current_tracks);
     delete_old_albums();
     delete_old_artists();
-    yield("Done.");
+    yield("Database up-to-date.");
+    Cache::generateMenu();
+    yield("Cached menu regenerated.");
 }
