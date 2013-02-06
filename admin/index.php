@@ -39,7 +39,7 @@ if (isset($_POST['user']) && isset($_POST['password'])){
 				<div id="tabs-db">
 					<div class="container">
 						<button class="progress" data-href="<?php echo get_current_rel_url(); ?>../ajax/admin/scanner.php?action=scan">Mettre à jour la base de données</button>
-						<button class="progress" data-href="<?php echo get_current_rel_url(); ?>../ajax/admin/scanner.php?action=empty">Vider la base de données</button>
+						<button class="progress confirm" data-title="Confirmation" data-confirm="Vider la base de données ?" data-href="<?php echo get_current_rel_url(); ?>../ajax/admin/scanner.php?action=empty">Vider la base de données</button>
 						<pre class="progress-recipient"></pre>
 					</div>
 				</div>
