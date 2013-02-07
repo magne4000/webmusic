@@ -27,15 +27,8 @@ if (isset($_POST['user']) && isset($_POST['password'])){
 		<?php if (isLogged()){ ?>
 			<div class="pane">
 				<ul>
-					<li><a href="#tabs-cache">Cache</a></li>
 					<li><a href="#tabs-db">Base de données</a></li>
 				</ul>
-				<div id="tabs-cache">
-					<div class="container">
-						<button class="progress" data-href="<?php echo get_current_rel_url(); ?>../ajax/admin/cache.php?cache=1">Regénérer le menu</button>
-						<pre class="progress-recipient"></pre>
-					</div>
-				</div>
 				<div id="tabs-db">
 					<div class="container">
 						<button class="progress" data-href="<?php echo get_current_rel_url(); ?>../ajax/admin/scanner.php?action=scan">Mettre à jour la base de données</button>
