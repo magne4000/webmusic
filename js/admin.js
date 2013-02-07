@@ -30,14 +30,25 @@ $(document).ready(function() {
         var $this = $(this);
         $this.nextAll('.progress-recipient').html('');
         $('button.progress').button('option', 'disabled', true);
+        var processed = "", unprocessed = "", scanned = "";
         $.ajax({
             type: "GET",
             url: $this.data('href'),
-            progress: function(update){
-                $this.nextAll('.progress-recipient').append(update);
-                $this.nextAll('.progress-recipient').animate({
-                    scrollTop: $this.nextAll('.progress-recipient').get(0).scrollHeight
-                }, 200);
+            progress: function(e){
+                var responseText = e.target.responseText;
+                if (responseText && (responseText.length > scanned.length)) {
+                    scanned = responseText;
+                    unprocessed = responseText.substr(processed.length);
+                    if (unprocessed.indexOf("\n") > 0) {
+                        if (jQuery.trim(unprocessed).length){
+                            $this.nextAll('.progress-recipient').append(unprocessed);
+                            $this.nextAll('.progress-recipient').animate({
+                                scrollTop: $this.nextAll('.progress-recipient').get(0).scrollHeight
+                            }, 200);
+                        }
+                        processed += unprocessed;
+                    }
+                }
             },
             error: function(_, __, e) {
                 console.log("ajax error");

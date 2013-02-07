@@ -1,46 +1,16 @@
-/**
- * Provides a callback for each newly delivered content even before the request
- * is complete.
- * 
- * Inspired from https://github.com/sash/jquery-ajax-progress
- */
-jQuery.ajaxPrefilter(function(options, _, jqXHR) {
-    if (jQuery.isFunction(options.progress)) {
-        var xhrFactory = options.xhr, interval = null, processed = "", unprocessed = "", scanned = "";
-        var updater = function(responseText) {
-            if (responseText && (responseText.length > scanned.length)) {
-                scanned = responseText;
-                unprocessed = responseText.substr(processed.length);
-                if (unprocessed.indexOf("\n") > 0) {
-                    if (jQuery.trim(unprocessed).length){
-                        options.progress(unprocessed);
-                    }
-                    processed += unprocessed;
-                }
-            }
-        };
+(function($, window, undefined) {
+    //patch ajax settings to call a progress callback
+    var oldXHR = $.ajaxSettings.xhr;
+    $.ajaxSettings.xhr = function() {
+        var xhr = oldXHR();
+        if(xhr instanceof window.XMLHttpRequest) {
+            xhr.addEventListener('progress', this.progress, false);
+        }
         
-        options.xhr = function() {
-            var xhr = xhrFactory.apply(this, arguments);
-            interval = setInterval(function() {
-                try {
-                    updater(xhr.responseText);
-                } catch (e) {
-                    console.log(e);
-                }
-            }, options.progressInterval || 250);
-            return xhr;
-        };
+        if(xhr.upload) {
+            xhr.upload.addEventListener('progress', this.progress, false);
+        }
         
-        var stop = function() {
-            if (interval) {
-                clearInterval(interval);
-            }
-        };
-
-        jqXHR.then(stop, stop);
-        jqXHR.done(function(jx) {
-            updater(jx);
-        });
-    }
-});
+        return xhr;
+    };
+})(jQuery, window);
