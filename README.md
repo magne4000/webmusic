@@ -14,17 +14,26 @@ e.g. (Apache)
 
     cd /var/www && git clone https://github.com/magne4000/webmusic
 
+To init the database, there is a _webmusic.sql_ file that you can import after having created a new empty database called
+webmusic, with a specific user which have read/write access to this database.
+
 Configuration
 -------------
 In order to configure the app, you need to have a file called webmusic.conf in the app directory.  
-A sample file called webmusic.conf.default is available, so we base webmusic.conf on it
+A sample file called _webmusic.conf.default_ is available, so we base webmusic.conf on it
 
     cp app/webmusic.conf.default app/webmusic.conf
 
-The **db** section allows you to set your BDD credentials.  
+The **db** section allows you to set your BDD credentials and your timezone.  
+The **scanner** section is the configuration about the database update process:
+  * If the **root** parameter
+    is set to _/home/user/music_ and **root_url** to _http://mydomain.com/music_, and if you have a music
+    file _/home/user/music/Artist1/Album1/mymusic.mp3_, it must be accessible at _http://mydomain.com/music/Artist1/Album1/mymusic.mp3_.
+
 The **debug** section allows you to switch ON/OFF debugging.  
 The **cache** section can be tweaked if your database as a huge amount of artists.  
 The **soundmanager** section must logically not be changed, but if you're having troubles playing your music, you can try to change those [soundmanager](http://www.schillmania.com/projects/soundmanager2/doc/) settings 
+The **admin** section must be filled if you want to have access the player administration. 
 
 ### Cache
 To init the cache files, the folder cache must be writable (or owned) by the web server.  
@@ -32,7 +41,13 @@ e.g. (Apache)
 
     chown www-data:www-data cache
 
-And to generate the cache, simply access this URL on your server : http://YOURSERVER/webmusic/admin/admin.php?regenerate=1
+Administration
+--------------
+
+In order to have access to admin page, you must have filled **user** parameter in **admin** section of the configuration file.
+Then open your browser to http://YOURSERVER/path_to_webmusic/admin and log in.  
+From there, you can update the database (it will regenerate the cache when it finish) or empty it. If the update script
+has been stopped before its completion you just have to relaunch the update and the process will be resumed.
 
 Plugins
 -------
