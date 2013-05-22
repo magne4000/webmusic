@@ -17,7 +17,14 @@
                     });
                     data = $this.data('fastsearch');
                 }
-                
+                $this.on( "keydown", function( event ) {
+                    event.stopPropagation();
+                });
+                $this.on( "search", function( event ) {
+                    if (!$this.val()){
+                        $this.fastsearch('restore');
+                    }
+                });
                 $this.on( "keyup", function( event ) {
                     var keyCode = $.ui.keyCode;
                     switch( event.which ) {
