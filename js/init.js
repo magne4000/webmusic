@@ -19,7 +19,7 @@ $(document).ready(function() {
     
     $('#right_pane').resizable({
         handles: 'w',
-        minWidth: 200,
+//        minWidth: 200,
         maxWidth: 600,
         resize: function(event, ui){
             $(this).css({
@@ -247,7 +247,7 @@ $(document).ready(function() {
     });
     
     /* Actions */
-    $(document).on('hover', '.wrapper li, .album_list_element', function(){
+    $(document).on('mouseenter mouseleave', '.wrapper li, .album_list_element', function(){
         $(this).find('.actionhandler').toggleClass('active_hover');
     });
     
