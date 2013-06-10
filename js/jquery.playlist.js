@@ -160,16 +160,6 @@
             return this.each(function() {
                 var $this = $(this), data = $this.data('playlist'), tracks = data.store.store('getTracks');
                 if (tracks[data.currentuniqid] !== undefined){
-                    if (!!tracks[data.currentuniqid].duration){
-                        $('#player .total-time').text(formatDuration(tracks[data.currentuniqid].duration));
-                        $("#bar").on("slidecreate", function( event, ui ) {
-                            data.slidecreated = true;
-                            $('#bar').slider('option', 'max', tracks[data.currentuniqid].duration);
-                        });
-                        if (data.slidecreated){
-                            $('#bar').slider('option', 'max', tracks[data.currentuniqid].duration);
-                        }
-                    }
                     clearTimeout(data.timer);
                     data.timer = setTimeout(function(){
                         data.current = soundManager.createSound({
@@ -187,6 +177,13 @@
                             },
                             onload: function(){
                                 $('#player .total-time').text(formatDuration(this.duration/1000));
+                                $("#bar").on("slidecreate", function( event, ui ) {
+                                    data.slidecreated = true;
+                                    $('#bar').slider('option', 'max', this.duration);
+                                });
+                                if (data.slidecreated){
+                                    $('#bar').slider('option', 'max', this.duration);
+                                }
                             },
                             volume: 100
                         });
