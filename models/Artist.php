@@ -27,7 +27,10 @@ class Artist extends BaseArtist
 				
 			if (is_array($filter)){
 				foreach ($filter as $key => $val){
-					if ($key === "album"){
+				    if ($key === "artist"){
+			            $q->whereIn('ar.id', $val);
+				    }
+					elseif ($key === "album"){
 						if (!$joinedToAlbum){
 							$q->leftJoin('ar.Album al')
 							->whereIn('al.id', $val);

@@ -24,7 +24,10 @@ class Album extends BaseAlbum
 		if ($filter !== null){
 			if (is_array($filter)){
 				foreach ($filter as $key => $val){
-					if ($key === "artist"){
+				    if ($key === "album"){
+				        $q->whereIn('al.id', $val);
+				    }
+					elseif ($key === "artist"){
 						$q->leftJoin('al.Artist ar')
 						  ->whereIn('ar.id', $val);
 					}
