@@ -134,6 +134,7 @@ function fillTracksList(objs, $applyOn){
     
     $('.context-menu-item-disabled-hover').removeClass("context-menu-item-disabled-hover").addClass('context-menu-item-hover');
     $('.context-menu-item-disabled').removeClass("context-menu-item-disabled");
+    $applyOn.trigger('tracklistupdated');
 }
 
 function fillAlbumsList(objs, $applyOn){
@@ -153,6 +154,7 @@ function fillAlbumsList(objs, $applyOn){
         div.appendTo($applyOn);
     }
     loadAlbumArts($applyOn);
+    $applyOn.trigger('albumlistupdated');
 }
 
 function showError(msg){
