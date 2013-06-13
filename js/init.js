@@ -48,10 +48,26 @@ $(document).ready(function() {
     $left_pane_ul = $('#left_pane .wrapper ul'),
     timer = null;
     
+    $left_pane_ul.recipient();
+    $left_pane_ul.recipient('addListener', 'artistClick', function(ids){
+        var $this = $(this), modified = false;
+        $('[data-artist].ui-selected,:data(artist).ui-selected').removeClass('ui-selected');
+        $('[data-artist],:data(artist)').each(function(){
+            if ($.inArray($(this).data('artist').id, ids) >= 0){
+                $(this).addClass('ui-selected');
+                modified = true;
+            }
+        });
+        if (modified){
+            $this.trigger('selectablestop');
+        }
+    });
+    
     $recipient_body2_wrapper.recipient('addListener', 'artistClicked', function(target){
         $tabs.tabs("option", "active", 0);
         var $this = $(this);
         getList(MODES.ALBUMS_BY_ARTISTS, target, fillAlbumsList, $this);
+        
     });
     
     $recipient_body2_wrapper.on('selectablestop', function(){
@@ -69,6 +85,19 @@ $(document).ready(function() {
                 $this.trigger('albumClicked', selected);
             }, 100);
         }
+    })
+    .recipient('addListener', 'albumClick', function(ids){
+        var $this = $(this), modified = false;
+        $(':data(album).ui-selected').removeClass('ui-selected');
+        $(':data(album)').each(function(){
+            if ($.inArray($(this).data('album').id, ids) >= 0){
+                $(this).addClass('ui-selected');
+                modified = true;
+            }
+        });
+        if (modified){
+            $this.trigger('selectablestop');
+        }
     });
     
     $recipient_right_pane
@@ -81,6 +110,15 @@ $(document).ready(function() {
         var $this = $(this);
         $('.context-menu-item').addClass("context-menu-item-disabled");
         getList(MODES.TRACKS_BY_ALBUMS, target, fillTracksList, $this);
+    })
+    .recipient('addListener', 'trackClick', function(ids){
+        $(':data(track).ui-selected').removeClass('ui-selected');
+        $(':data(track)').each(function(){
+            var $this = $(this);
+            if ($.inArray($this.data('track').id, ids) >= 0){
+                $this.addClass('ui-selected');
+            }
+        });
     });
     
     $('#player').recipient()
@@ -166,9 +204,7 @@ $(document).ready(function() {
     
     // Tooltip
     Opentip.styles.myStyle = {
-        // Make it look like the alert style. If you omit this, it will default to "standard"
         extends: "dark",
-        // Tells the tooltip to be fixed and be attached to the trigger, which is the default target
         background: "#202020",
         borderRadius: 5
     };
@@ -177,15 +213,17 @@ $(document).ready(function() {
     
     $('#bar').on('mousemove', function(e){
         var txt = '...',
-            track = $playlist.playlist('getCurrentTrack'),
-            cursorPositionRelative = Math.round((e.pageX - $('#bar').offset().left)),
-            cursorPosition = Math.round(cursorPositionRelative/$('#bar').width() * (track.duration/1000));
-        if (!!track && track.readyState == 3){ //loaded/success
-            txt = formatDuration(cursorPosition);
-        }else if (!!track && track.readyState == 2){
-            txt = 'Error';
-        }else if (!!track && track.readyState == 1){
-            txt = 'Loading';
+            track = $playlist.playlist('getCurrentTrack');
+        if (!!track){
+            var cursorPositionRelative = Math.round((e.pageX - $('#bar').offset().left)),
+                cursorPosition = Math.round(cursorPositionRelative/$('#bar').width() * (track.duration/1000));
+            if (track.readyState == 3){ //loaded/success
+                txt = formatDuration(cursorPosition);
+            }else if (track.readyState == 2){
+                txt = 'Error';
+            }else if (track.readyState == 1){
+                txt = 'Loading';
+            }
         }
         tooltipBar.setContent(txt);
     });
