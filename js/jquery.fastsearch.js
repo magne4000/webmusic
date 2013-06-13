@@ -66,6 +66,7 @@
                 if (!!data.spancache){
                     data.$recipient.prepend(data.spancache);
                 }
+                $this.trigger('fastsearchchanged', null);
             });
         },
         search: function(value) {
@@ -77,6 +78,7 @@
                 {term: value},
                 function( items ) {
                     $this.fastsearch('_render', items);
+                    $this.trigger('fastsearchchanged', value);
                 },
                 "json"
             );
