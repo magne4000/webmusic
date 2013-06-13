@@ -3,6 +3,10 @@ var MODES = {
 	ALBUMS_BY_ARTISTS : "ALBUMS_BY_ARTISTS",
 	TRACKS_BY_ALBUMS : "TRACKS_BY_ALBUMS"
 };
+var postTimeout = {
+    'tracks': null,
+    'albums': null
+};
 
 function getList(mode, objs, callback, $applyOn){
 	var filter, retrieve;
@@ -37,17 +41,20 @@ function getList(mode, objs, callback, $applyOn){
 		default:
 			return false;
 	}
-	$.post('ajax/getJSONlist.php',{
-		filters : filter,
-		mode : retrieve
-	}, function(objs){
-		$applyOn.empty();
-		callback(objs, $applyOn);
-	}, "json")
-	.fail(function(jqXHR, textStatus){
-		console.log(textStatus);
-		console.log(jqXHR.responseText);
-	});
+	clearTimeout(postTimeout[retrieve]);
+	postTimeout[retrieve] = setTimeout(function(){
+        $.post('ajax/getJSONlist.php',{
+            filters : filter,
+            mode : retrieve
+        }, function(objs){
+            $applyOn.empty();
+            callback(objs, $applyOn);
+        }, "json")
+        .fail(function(jqXHR, textStatus){
+            console.log(textStatus);
+            console.log(jqXHR.responseText);
+        });
+	}, 200);
 }
 
 function getFileInformations(options, callback){
