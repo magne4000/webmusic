@@ -114,10 +114,17 @@
                         }
                     };
                     if (!!searchTxt && $.hash.search != searchTxt){
-                        var e = jQuery.Event('keyup');
-                        e.which = e.keyCode = 50; //random value
-                        $(document).one('fastsearchchanged', action);
-                        setTimeout(function(){$('#input_artist').val(searchTxt).trigger(e);}, 100);
+                        var fastsearchaction = function(){
+                            var e = jQuery.Event('keyup');
+                            e.which = e.keyCode = 50; //random value
+                            $(document).one('fastsearchchanged', action);
+                            setTimeout(function(){$('#input_artist').val(searchTxt).trigger(e);}, 100);
+                        };
+                        if (!ulMenu.loaded){
+                            $(document).one('ajaxmenuloaded', fastsearchaction);
+                        }else{
+                            fastsearchaction();
+                        }
                     }else{
                         action();
                     }

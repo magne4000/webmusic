@@ -4,6 +4,7 @@ var inputSearch = null;
 var ULMenu = function(){
 	this.jQObj = null;
 	this.launchFilterMenu = false;
+	this.loaded = false;
 	
 	this.get = function (){
 		return this.jQObj;
@@ -28,6 +29,8 @@ var ULMenu = function(){
 			filterMenuTimer = setTimeout(function(){filterMenu();}, 300);
 			this.launchFilterMenu = false;
 		}
+		this.loaded = true;
+		this.jQObj.trigger('ajaxmenuloaded');
 	};
 };
 ulMenu = new ULMenu();
