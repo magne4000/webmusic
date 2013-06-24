@@ -168,22 +168,18 @@
                             autoLoad: true,
                             autoPlay: false,
                             whileplaying: function(){
-                                // Progress bar
-                                $('#bar').slider('value', this.position);
-                                $('#player .elapsed-time').text(formatDuration(this.position/1000));
+                                $this.trigger('playlistplaying', [this]);
                             },
                             onfinish: function(){
+                                $this.trigger('playlistfinish', [this]);
                                 $player.player('next');
                             },
                             onload: function(){
-                                $('#player .total-time').text(formatDuration(this.duration/1000));
-                                $('#bar').slider('option', 'max', this.duration);
+                                $this.trigger('playlistload', [this]);
                             },
                             volume: 100
                         });
-                        $('#info span')
-                            .attr('title', 'Artist: ' + tracks[data.currentuniqid].Album.Artist.name + '\nAlbum: ' + tracks[data.currentuniqid].Album.name + '\nName: ' + tracks[data.currentuniqid].name)
-                            .text(tracks[data.currentuniqid].Album.name + ' — ' + tracks[data.currentuniqid].name);
+                        $this.trigger('playlistbeforeload', [tracks[data.currentuniqid]]);
                         data.loadedSID.push(tracks[data.currentuniqid].id);
                         if (typeof callback == 'function'){
                             callback();

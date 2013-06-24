@@ -142,6 +142,7 @@
     font-family: helvetica, arial, sans-serif;
     font-size: 1.3em;
     white-space: nowrap;
+    overflow: hidden;
 }
 
 #bar {

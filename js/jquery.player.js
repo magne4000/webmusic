@@ -17,6 +17,7 @@
                         $shuffle : $(options.shuffleselector || '#shuffle'),
                         $volume : $(options.volumeselector || '#volume'),
                         $bar : $(options.barselector || '#bar'),
+                        $info : $(options.infoselector || '#info span'),
                         $volumewrapper : $(options.volumewrapperselector || '#volume-wrapper')
                     });
 
@@ -59,6 +60,23 @@
                         }
                     }
                 });
+                
+                // Bind with playlist events
+                $this.recipient();
+                $this.recipient('addListener', 'playlistplaying', function(track){
+                    data.$bar.slider('value', track.position);
+                    $this.find('.elapsed-time').text(formatDuration(track.position/1000));
+                }).recipient('addListener', 'playlistload', function(track){
+                    $this.find('.total-time').text(formatDuration(track.duration/1000));
+                    data.$bar.slider('option', 'max', track.duration);
+                });
+                
+                data.$info.recipient();
+                data.$info.recipient('addListener', 'playlistbeforeload', function(track){
+                    $(this).attr('title', 'Artist: ' + track.Album.Artist.name + '\nAlbum: ' + track.Album.name + '\nTrack: ' + track.name)
+                    .text(track.Album.Artist.name + ' — ' + track.name);
+                });
+                
                 $this.trigger('playercreate');
             });
         },
