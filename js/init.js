@@ -228,19 +228,6 @@ $(document).ready(function() {
         tooltipBar.setContent(txt);
     });
     
-    $('#bar').slider({
-        range: "min",
-        create: function( event, ui ) {
-            $('#bar a').remove();
-        },
-        slide: function( event, ui ) {
-            var track = $playlist.playlist('getCurrentTrack');
-            if (!!track && track.readyState > 2){
-                track.setPosition(ui.value * 1000);
-            }
-        }
-    });
-    
     /* Volume */
     $('#volume-max').slider({
         orientation: "vertical",

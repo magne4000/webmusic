@@ -169,7 +169,7 @@
                             autoPlay: false,
                             whileplaying: function(){
                                 // Progress bar
-                                $('#bar').slider('value', this.position/1000);
+                                $('#bar').slider('value', this.position);
                                 $('#player .elapsed-time').text(formatDuration(this.position/1000));
                             },
                             onfinish: function(){
@@ -177,13 +177,7 @@
                             },
                             onload: function(){
                                 $('#player .total-time').text(formatDuration(this.duration/1000));
-                                $("#bar").on("slidecreate", function( event, ui ) {
-                                    data.slidecreated = true;
-                                    $('#bar').slider('option', 'max', this.duration);
-                                });
-                                if (data.slidecreated){
-                                    $('#bar').slider('option', 'max', this.duration);
-                                }
+                                $('#bar').slider('option', 'max', this.duration);
                             },
                             volume: 100
                         });
