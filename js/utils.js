@@ -100,6 +100,9 @@ function show_playlist_tab(pl){
         $tabs.tabs("option", "active", 1);
         $("#tabs-playlist").playlist_div({playlist: pl});
         playlist_tab_created = true;
+        setTimeout(function(){
+            $("#tabs-playlist").trigger('playlisttabcreated');
+        }, 1);
     }
     $tabs.tabs("option", "active", 1);
 }
