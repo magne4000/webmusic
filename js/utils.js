@@ -132,8 +132,6 @@ function fillTracksList(objs, $applyOn){
         .appendTo($applyOn);
     }
     
-    $('.context-menu-item-disabled-hover').removeClass("context-menu-item-disabled-hover").addClass('context-menu-item-hover');
-    $('.context-menu-item-disabled').removeClass("context-menu-item-disabled");
     $applyOn.trigger('tracklistupdated');
 }
 

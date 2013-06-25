@@ -112,6 +112,7 @@
                     }
                 }else{
                     $this.trigger('playlistremove', uniqid);
+                    data.playlist_div.playlist_div('remove', uniqid);
                     //TODO store as a plugin
                     data.store.store('remove', uniqid);
                     if (data.shuffle){

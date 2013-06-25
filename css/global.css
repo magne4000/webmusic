@@ -199,6 +199,10 @@ header {
 	cursor: pointer;
 }
 
+#tabs-playlist table tr:hover {
+	background: rgba(255, 255, 255, 0.05);
+}
+
 #search {
 	color: white;
 	margin-right: 5px;
@@ -314,16 +318,27 @@ footer {
 	top: 1px;
 }
 
-#body2_wrapper .actionhandler {
+#tabs-albums .actionhandler {
 	position: absolute;
 	right: 2px;
 	bottom: 18px;
 }
 
-#body2_wrapper .actionhandler.active,#body2_wrapper .actionhandler:hover
-	{
+#tabs-albums .actionhandler.active,#tabs-albums .actionhandler:hover {
 	right: 1px;
 	bottom: 17px;
+}
+
+#tabs-playlist .actionhandler {
+	position: absolute;
+	right: 40px;
+	bottom: -3px;
+}
+
+#tabs-playlist .actionhandler.active,#tabs-playlist .actionhandler:hover
+	{
+	right: 39px;
+	bottom: -4px;
 }
 
 pre {
@@ -364,4 +379,14 @@ fieldset .ui-button {
 fieldset .line {
 	height: 30px;
 	width: 100%;
+}
+
+/* Context menu */
+
+.ui-menu {
+	z-index: 9999;
+}
+
+.ui-menu .ui-state-disabled {
+    margin: 0;
 }

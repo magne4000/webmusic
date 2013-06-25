@@ -103,12 +103,10 @@ $(document).ready(function() {
     $recipient_right_pane
     .recipient('addListener', 'artistClicked', function(target){
         var $this = $(this);
-        $('.context-menu-item').addClass("context-menu-item-disabled");
         getList(MODES.TRACKS_BY_ARTISTS, target, fillTracksList, $this);
     })
     .recipient('addListener', 'albumClicked', function(target){
         var $this = $(this);
-        $('.context-menu-item').addClass("context-menu-item-disabled");
         getList(MODES.TRACKS_BY_ALBUMS, target, fillTracksList, $this);
     })
     .recipient('addListener', 'trackClick', function(ids){
@@ -159,41 +157,6 @@ $(document).ready(function() {
         }, 100);
     });
     
-    /* Context menus */
-    var cond = {condition : ':not(.ui-selected)', fct : function(me){
-        me.parent('.ui-selectable').find('.ui-selected').removeClass('ui-selected');
-        me.addClass('ui-selected');
-        me.trigger('selectablestop');
-    }},
-    condClick = {condition : ':not(.ui-selected)', fct : function(me){
-        if (!me.parent().is('.ui-selected')){
-            me.parents('.ui-selectable').find('.ui-selected').removeClass('ui-selected');
-            me.parent().addClass('ui-selected');
-            me.parent().trigger('selectablestop');
-        }
-        me.addClass('active');
-    }};
-    
-    var menuTracks = [
-        {'Play':{onclick: function(menuItem,menu) { $recipient_right_pane.trigger('playTracks', ['#right_pane ul .ui-selected']); }, disabled: true} },
-        //$.contextMenu.separator,
-        {'Add to playlist':{onclick: function(menuItem,menu) { $recipient_right_pane.trigger('addTracks', ['#right_pane ul .ui-selected']); }, disabled: true} }
-    ];
-    $('#right_pane').contextMenu('init', 'li', menuTracks,{theme:'4000'},cond);
-    $('#right_pane').contextMenu('initClick', '.actionhandler', menuTracks,{theme:'4000'},condClick);
-    
-    var menuArtistsAndAlbums = [
-        {'Play':{onclick: function(menuItem,menu) { $recipient_right_pane.trigger('playTracks', ['#right_pane ul li']); }, disabled: true} },
-        //$.contextMenu.separator,
-        {'Add to playlist':{onclick: function(menuItem,menu) { $recipient_right_pane.trigger('addTracks', ['#right_pane ul li']); }, disabled: true} }
-    ];
-    $('#tabs-albums').contextMenu('init', '.album_list_element', menuArtistsAndAlbums,{theme:'4000'},cond);
-    $('#tabs-albums').contextMenu('initClick', '.actionhandler', menuArtistsAndAlbums,{theme:'4000'},condClick);
-    $('#left_pane').contextMenu('init', 'li', menuArtistsAndAlbums,{theme:'4000'},cond);
-    $('#left_pane').contextMenu('initClick', '.actionhandler', menuArtistsAndAlbums,{theme:'4000'},condClick);
-    
-    /* Player */
-    
     $store = $('body').store();
     $playlist = $('body').playlist({
         store : $store
@@ -201,6 +164,132 @@ $(document).ready(function() {
     $player = $('body').player({
         playlist : $playlist
     });
+    
+    /* Context menus */
+    
+    var cmenu = [
+        {title: 'Play', cmd: 'playTracks', disabled: false},
+        {title: 'Add to playlist', cmd: 'addTracks', disabled: false}
+    ],
+    showEffect = {delay: 100, duration: 1},
+    menuPosition = function(event, ui){
+        if ($(event.target).data('actionhandler')){
+            var actionhandler = $(event.target).data('actionhandler');
+            $(event.target).data('actionhandler', false);
+            if (actionhandler){
+                return {my: "left top", at: "left bottom", of: $(event.target).find('.actionhandler'), collision: "fit"};
+            }
+        }
+        return {my: "left top", at: "center", of: event, collision: "fit"};
+    },
+    menuPositionTrack = function(event, ui){
+        if ($(event.target).data('actionhandler')){
+            var actionhandler = $(event.target).data('actionhandler');
+            $(event.target).data('actionhandler', false);
+            if (actionhandler){
+                return {my: "right top", at: "right bottom", of: $(event.target).find('.actionhandler'), collision: "fit"};
+            }
+        }
+        return {my: "left top", at: "center", of: event, collision: "fit"};
+    };
+    $('#tabs-albums').contextmenu({
+        delegate: '.album_list_element',
+        menu: cmenu,
+        show: showEffect,
+        hide: false,
+        position: menuPosition,
+        select: function(event, ui) {
+            $recipient_right_pane.trigger(ui.cmd, ['#right_pane ul li']);
+        },
+        beforeOpen: function(event, ui){
+            if (!ui.target.hasClass('ui-selected')){
+                ui.target.siblings('.ui-selected').removeClass('ui-selected');
+                ui.target.addClass('ui-selected');
+                ui.target.addClass('active');
+                ui.target.parent().trigger('selectablestop');
+            }
+        }
+    });
+    $('#left_pane').contextmenu({
+        delegate: 'li',
+        menu: cmenu,
+        show: showEffect,
+        hide: false,
+        position: menuPosition,
+        select: function(event, ui) {
+            if ($('#tabs-albums').find('.ui-selected')){
+                $(document).one('tracklistupdated', function(){
+                    $recipient_right_pane.trigger(ui.cmd, ['#right_pane ul li']);
+                });
+                ui.target.parent().trigger('selectablestop');
+            }else{
+                $recipient_right_pane.trigger(ui.cmd, ['#right_pane ul li']);
+            }
+        },
+        beforeOpen: function(event, ui){
+            if (!ui.target.hasClass('ui-selected')){
+                ui.target.siblings('.ui-selected').removeClass('ui-selected');
+                ui.target.addClass('ui-selected');
+                ui.target.addClass('active');
+                ui.target.parent().trigger('selectablestop');
+            }
+        }
+    });
+    $('#right_pane').contextmenu({
+        delegate: 'li',
+        menu: cmenu,
+        show: showEffect,
+        hide: false,
+        position: menuPositionTrack,
+        select: function(event, ui) {
+            $recipient_right_pane.trigger(ui.cmd, ['#right_pane ul li.ui-selected']);
+        },
+        beforeOpen: function(event, ui){
+            if (!ui.target.hasClass('ui-selected')){
+                ui.target.siblings('.ui-selected').removeClass('ui-selected');
+                ui.target.addClass('ui-selected');
+                ui.target.addClass('active');
+                ui.target.parent().trigger('selectablestop');
+            }
+        }
+    });
+    $("#tabs-albums,#left_pane,#right_pane").on('click', '.actionhandler', function(e){
+        $(this).parent().data('actionhandler', true);
+        $(e.delegateTarget).contextmenu('open', $(this).parent());
+    });
+    $("#tabs-albums,#left_pane,#right_pane").recipient();
+    $("#tabs-albums,#left_pane,#right_pane").recipient('addListener', 'tracklistupdated', function(target){
+        $(this).contextmenu('enableEntry', 'playTracks', true);
+        $(this).contextmenu('enableEntry', 'addTracks', true);
+    });
+    $("#tabs-albums,#left_pane,#right_pane").recipient('addListener', 'artistClicked albumClicked', function(target){
+        $(this).contextmenu('enableEntry', 'playTracks', false);
+        $(this).contextmenu('enableEntry', 'addTracks', false);
+    });
+    /*
+    // Context menu for playlist
+    setTimeout(function(){
+        var menuPlaylist = [
+            {'Play': {
+                onclick: function(menuItem, menu) {
+                    var tr = $(this).parents('tr');
+                    $playlist.playlist('remove', tr.attr('id'));
+                },
+                disabled: false
+            }},
+            {'Remove': {
+                onclick: function(menuItem, menu) {
+                    var tr = $(this).parents('tr');
+                    $playlist.playlist('remove', tr.attr('id'));
+                },
+                disabled: false
+            }}
+        ];
+        $('#tabs-playlist').contextMenu('init', 'tr', menuPlaylist, {theme:'4000'});
+        $('#tabs-playlist').contextMenu('initClick', '.actionhandler', menuPlaylist, {theme:'4000'});
+    }, 500);
+    */
+    /* Player */
     
     // Tooltip
     Opentip.styles.myStyle = {
@@ -272,7 +361,7 @@ $(document).ready(function() {
     });
     
     /* Actions */
-    $(document).on('mouseenter mouseleave', '.wrapper li, .album_list_element', function(){
+    $(document).on('mouseenter mouseleave', '.wrapper li, .album_list_element, #tabs-playlist tr', function(){
         $(this).find('.actionhandler').toggleClass('active_hover');
     });
     
