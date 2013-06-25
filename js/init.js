@@ -168,8 +168,8 @@ $(document).ready(function() {
     /* Context menus */
     
     var cmenu = [
-        {title: 'Play', cmd: 'playTracks', disabled: false},
-        {title: 'Add to playlist', cmd: 'addTracks', disabled: false}
+        {title: 'Play', cmd: 'playTracks'},
+        {title: 'Add to playlist', cmd: 'addTracks'}
     ],
     showEffect = {delay: 100, duration: 1},
     menuPosition = function(event, ui){
@@ -253,10 +253,6 @@ $(document).ready(function() {
             }
         }
     });
-    $("#tabs-albums,#left_pane,#right_pane").on('click', '.actionhandler', function(e){
-        $(this).parent().data('actionhandler', true);
-        $(e.delegateTarget).contextmenu('open', $(this).parent());
-    });
     $("#tabs-albums,#left_pane,#right_pane").recipient();
     $("#tabs-albums,#left_pane,#right_pane").recipient('addListener', 'tracklistupdated', function(target){
         $(this).contextmenu('enableEntry', 'playTracks', true);
@@ -266,29 +262,35 @@ $(document).ready(function() {
         $(this).contextmenu('enableEntry', 'playTracks', false);
         $(this).contextmenu('enableEntry', 'addTracks', false);
     });
-    /*
-    // Context menu for playlist
+    
     setTimeout(function(){
-        var menuPlaylist = [
-            {'Play': {
-                onclick: function(menuItem, menu) {
-                    var tr = $(this).parents('tr');
-                    $playlist.playlist('remove', tr.attr('id'));
-                },
-                disabled: false
-            }},
-            {'Remove': {
-                onclick: function(menuItem, menu) {
-                    var tr = $(this).parents('tr');
-                    $playlist.playlist('remove', tr.attr('id'));
-                },
-                disabled: false
-            }}
-        ];
-        $('#tabs-playlist').contextMenu('init', 'tr', menuPlaylist, {theme:'4000'});
-        $('#tabs-playlist').contextMenu('initClick', '.actionhandler', menuPlaylist, {theme:'4000'});
+        $("#tabs-albums,#left_pane,#right_pane,#tabs-playlist").on('click', '.actionhandler', function(e){
+            $(this).parent().data('actionhandler', true);
+            $(e.delegateTarget).contextmenu('open', $(this).parent());
+        });
+        $('#tabs-playlist').contextmenu({
+            delegate: 'tr',
+            menu: [
+                {title: 'Play', cmd: 'play'},
+                {title: 'Remove', cmd: 'remove'}
+            ],
+            show: showEffect,
+            hide: false,
+            position: menuPosition,
+            select: function(event, ui) {
+                var trackid = ui.target.parents('tr').attr('id');
+                switch(ui.cmd){
+                case 'remove':
+                    $playlist.playlist('remove', trackid);
+                    break;
+                case 'play':
+                    $player.player('play', trackid);
+                    break;
+                }
+            }
+        });
     }, 500);
-    */
+    
     /* Player */
     
     // Tooltip

@@ -124,6 +124,7 @@
         play : function(uniqid) {
             return this.each(function() {
                 var $this = $(this), data = $this.data('player');
+                $this.player('_stop');
                 if (!uniqid) { // Current loaded track
                     $this.player('_play');
                 } else { // Load another track
