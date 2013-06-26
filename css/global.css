@@ -99,17 +99,17 @@ header {
 	box-shadow: 0 0 10px #ddd;
 }
 
-.wrapper ul>li:nth-of-type(1):hover,.wrapper ul>li.ui-selecting:nth-of-type(1),.wrapper ul>li.active:nth-of-type(1),.wrapper ul>li.ui-selected:nth-of-type(1)
+.wrapper ul>li:first-child
 	{
 	border-radius: 4px 4px 0 0;
 }
 
-.wrapper ul>li:nth-last-of-type(1):hover,.wrapper ul>li.ui-selecting:nth-last-of-type(1),.wrapper ul>li.active:nth-last-of-type(1),.wrapper ul>li.ui-selected:nth-last-of-type(1)
+.wrapper ul>li:last-child
 	{
 	border-radius: 0 0 4px 4px;
 }
 
-.wrapper ul>li:only-child:hover,.wrapper ul>li.ui-selecting:only-child,.wrapper ul>li.active:only-child,.wrapper ul>li.ui-selected:only-child
+.wrapper ul>li:only-child
 	{
 	border-radius: 4px;
 }
