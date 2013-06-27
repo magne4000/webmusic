@@ -236,7 +236,7 @@ footer {
 	top: 40px;
 	left: 0;
 	right: 0;
-	margin: 5px;
+	margin: 5px 5px 0 5px;
 	overflow: auto;
 }
 
