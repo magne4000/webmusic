@@ -264,7 +264,6 @@ $(document).ready(function() {
     });
     
     $(document).one('playlisttabcreated', function(){
-        console.log('fist');
         $("#tabs-albums,#left_pane,#right_pane,#tabs-playlist").on('click', '.actionhandler', function(e){
             $(this).parent().data('actionhandler', true);
             $(e.delegateTarget).contextmenu('open', $(this).parent());
