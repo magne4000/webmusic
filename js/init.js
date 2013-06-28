@@ -71,7 +71,7 @@ $(document).ready(function() {
     });
     
     $recipient_body2_wrapper.on('selectablestop', function(){
-        var $this = $(this), subelts = $this.find('.ui-selected'), selected;
+        var $this = $(this), subelts = $this.find('.album_list_element.ui-selected'), selected;
         clearTimeout(timer);
         if (subelts.size() === 0){
             selected = [$('#left_pane ul .ui-selected')];
