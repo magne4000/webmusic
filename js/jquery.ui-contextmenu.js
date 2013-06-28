@@ -144,7 +144,7 @@
                 posOption = opts.position,
                 self = this,
                 ui = {menu: this.$menu, target: $(event.currentTarget)};
-            this.currentTarget = event.currentTarget;
+            this.currentTarget = event.target;
             // Prevent browser from opening the system context menu
             event.preventDefault();
 
@@ -160,7 +160,7 @@
                 }
             }).bind("mousedown" + this.eventNamespace + " touchstart" + this.eventNamespace, function(event){
                 // Close menu when clicked outside menu
-                if( !$(event.currentTarget).closest(".ui-menu-item").length ){
+                if( !$(event.target).closest(".ui-menu-item").length ){
                     self._closeMenu();
                 }
             });
