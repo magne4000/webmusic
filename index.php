@@ -23,7 +23,7 @@ require_once dirname(__FILE__).'/app/cache.inc.php';
 <script type="text/javascript" src="js/jquery.recipient.js"></script>
 <script type="text/javascript" src="js/jquery.loadmask.min.js"></script>
 <script type="text/javascript" src="js/jquery.easy.notification.js"></script>
-<script type="text/javascript" src="js/jquery.ui-contextmenu.min.js"></script>
+<script type="text/javascript" src="js/jquery.ui-contextmenu.js"></script>
 <script type="text/javascript" src="js/jquery.fastsearch.js"></script>
 <script type="text/javascript" src="js/jquery.hotkeys.js"></script>
 <script type="text/javascript" src="js/opentip-jquery.js"></script>
