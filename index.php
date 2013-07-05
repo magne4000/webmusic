@@ -7,14 +7,14 @@ require_once dirname(__FILE__).'/app/cache.inc.php';
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
-<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.0.custom.css" />
+<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.3.custom.min.css" />
 <link rel="stylesheet" type="text/css" href="css/jquery.loadmask.css" />
 <link rel="stylesheet" type="text/css" href="css/jquery.jgrowl.css" />
 <link rel="stylesheet" type="text/css" href="css/opentip.css" />
 <link rel="stylesheet" type="text/css" href="css/global.css" />
 <link rel="stylesheet" type="text/css" href="css/player.css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.10.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/jquery.store.js"></script>
 <script type="text/javascript" src="js/jquery.playlist.div.js"></script>
