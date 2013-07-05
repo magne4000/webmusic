@@ -202,11 +202,12 @@ $(document).ready(function() {
             $recipient_right_pane.trigger(ui.cmd, ['#right_pane ul li']);
         },
         beforeOpen: function(event, ui){
-            if (!ui.target.hasClass('ui-selected')){
-                ui.target.siblings('.ui-selected').removeClass('ui-selected');
-                ui.target.addClass('ui-selected');
-                ui.target.addClass('active');
-                ui.target.parent().trigger('selectablestop');
+            var target = $(event.currentTarget);
+            if (!target.hasClass('ui-selected')){
+                target.siblings('.ui-selected').removeClass('ui-selected');
+                target.addClass('ui-selected');
+                target.addClass('active');
+                target.parent().trigger('selectablestop');
             }
         }
     });
