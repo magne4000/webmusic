@@ -270,7 +270,7 @@ $(document).ready(function() {
             $(e.delegateTarget).contextmenu('open', $(this).parent());
         });
         $('#tabs-playlist').contextmenu({
-            delegate: 'tr',
+            delegate: 'tbody tr',
             menu: [
                 {title: 'Play', cmd: 'play'},
                 {title: 'Remove', cmd: 'remove'}
