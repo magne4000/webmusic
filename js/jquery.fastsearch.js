@@ -101,7 +101,7 @@
                 $.each( items, function( index, item ) {
                     $( "<li></li>" )
                     .data( "artist", {id: item.id} )
-                    .text( item.name )
+                    .html( item.name + "<div class=\"actionhandler\"></div>" )
                     .appendTo( ul );
                 });
             }
