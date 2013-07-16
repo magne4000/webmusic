@@ -157,10 +157,7 @@ $(document).ready(function() {
         }, 100);
     });
     
-    $store = $('body').store();
-    $playlist = $('body').playlist({
-        store : $store
-    });
+    $playlist = $('body').playlist();
     $player = $('body').player({
         playlist : $playlist
     });

@@ -1,6 +1,9 @@
 (function($) {
     var methods = {
         init : function(options) {
+            if (!options){
+                options = {};
+            }
             return this.each(function() {
                 var $this = $(this), data = $this.data('playlist'), loopstorestate = null;
 
@@ -8,7 +11,6 @@
                 if (!data) {
                     $this.data('playlist', {
                         target : $this,
-                        store : options.store || this.store(),
                         uniqids : [],
                         randomuniqids : [],
                         prevrandomuniqids : [],
@@ -21,11 +23,11 @@
                         slidecreated: false
                     });
                     data = $this.data('playlist');
-                    loopstorestate = data.store.store('getLoopState');
+                    loopstorestate = $.store('getLoopState');
                     if (loopstorestate !== null){
                         data.loop = loopstorestate;
                     }
-                    if (len(data.store.store('getTracks')) > 0){
+                    if (len($.store('getTracks')) > 0){
                         show_playlist_tab($this);
                     }
                 }
@@ -34,15 +36,15 @@
         },
         setPlaylistDiv : function( playlist_div ) {
             return this.each(function() {
-                var $this = $(this), data = $this.data('playlist'), tracks = data.store.store('getTracks'), ind = null;
+                var $this = $(this), data = $this.data('playlist'), tracks = $.store('getTracks'), ind = null;
                 data.playlist_div = playlist_div;
                 if(len(tracks) > 0){
                     for (ind in tracks){
                         data.uniqids.push(tracks[ind].uniqid);
                     }
                     //Init playlist with store
-                    data.playlist_div.playlist_div('add', tracks, data.store.store('_getUniqidHead'));
-                    $this.playlist('setCurrent', data.store.store('_getUniqidHead'));
+                    data.playlist_div.playlist_div('add', tracks, $.store('_getUniqidHead'));
+                    $this.playlist('setCurrent', $.store('_getUniqidHead'));
                 }
             });
         },
@@ -55,7 +57,7 @@
         },
         add : function(track, callback) {
             return this.each(function() {
-                var $this = $(this), data = $this.data('playlist'), tracks = data.store.store('getTracks');
+                var $this = $(this), data = $this.data('playlist'), tracks = $.store('getTracks');
                 if (!!track.id){
                     track.uniqid = uniqid('track_');
                     data.uniqids.push(track.uniqid);
@@ -65,8 +67,7 @@
                     data.playlist_div.playlist_div('add', track);
                     // Only one track
                     $this.trigger('playlistadd', track);
-                    // TODO store as a plugin
-                    data.store.store('add', track, data.loop);
+                    $.store('add', track, data.loop);
                     if (len(tracks) === 0){ // First track, load it !
                         $this.playlist('setCurrent', track.uniqid, callback);
                     }
@@ -81,8 +82,7 @@
                         }
                         data.playlist_div.playlist_div('add', track[ind]);
                         $this.trigger('playlistadd', track[ind]);
-                        //TODO Store as a plugin
-                        data.store.store('add', track[ind], data.loop);
+                        $.store('add', track[ind], data.loop);
                         if (trackslen === 0){ // First track, load it !
                             $this.playlist('setCurrent', track[ind].uniqid, callback);
                         }
@@ -95,13 +95,12 @@
             return this.each(function() {
                 var $this = $(this), data = $this.data('playlist');
                 $this.trigger('playlistmove', uniqid, after);
-                // TODO store as a plugin
-                data.store.store('move', uniqid, after);
+                $.store('move', uniqid, after);
             });
         },
         remove : function( uniqid ) {
             return this.each(function() {
-                var $this = $(this), data = $this.data('playlist'), tracks = data.store.store('getTracks'), x = null;
+                var $this = $(this), data = $this.data('playlist'), tracks = $.store('getTracks'), x = null;
                 if (len(tracks) === 1) {
                     // proper clean (freeing memory)
                     $this.playlist('empty');
@@ -113,8 +112,7 @@
                 }else{
                     $this.trigger('playlistremove', uniqid);
                     data.playlist_div.playlist_div('remove', uniqid);
-                    //TODO store as a plugin
-                    data.store.store('remove', uniqid);
+                    $.store('remove', uniqid);
                     if (data.shuffle){
                         for (x in data.uniqids){
                             if (data.uniqids[x] == uniqid){
@@ -144,7 +142,7 @@
                 $('#info span').text('Waiting for a track');
                 var ind = null, $this = $(this), data = $this.data('playlist');
                 data.playlist_div.playlist_div('empty');
-                data.store.store('empty');
+                $.store('empty');
                 data.currentuniqid = null;
                 data.current = null;
                 data.uniqids = [];
@@ -159,7 +157,7 @@
         },
         fetchCurrent : function(callback){
             return this.each(function() {
-                var $this = $(this), data = $this.data('playlist'), tracks = data.store.store('getTracks');
+                var $this = $(this), data = $this.data('playlist'), tracks = $.store('getTracks');
                 if (tracks[data.currentuniqid] !== undefined){
                     clearTimeout(data.timer);
                     data.timer = setTimeout(function(){
@@ -191,7 +189,7 @@
         },
         setCurrent : function(currentuniqid, callback) {
             return this.each(function() {
-                var $this = $(this), data = $this.data('playlist'), tracks = data.store.store('getTracks');
+                var $this = $(this), data = $this.data('playlist'), tracks = $.store('getTracks');
                 if (tracks[currentuniqid] !== undefined){
                     data.currentuniqid = currentuniqid;
                     data.playlist_div.playlist_div('setCurrent', currentuniqid);
@@ -223,7 +221,7 @@
             return this.each(function() {
                 var $this = $(this), data = $this.data('playlist');
                 data.loop = !data.loop;
-                data.store.store('toggleLoop', true);
+                $.store('toggleLoop', true);
             });
         },
         getCurrentTrack : function(){
@@ -231,7 +229,7 @@
             return data.current;
         },
         getInfo : function( s ){
-            var data = this.data('playlist'), tracks = data.store.store('getTracks'), params = s.split('.');
+            var data = this.data('playlist'), tracks = $.store('getTracks'), params = s.split('.');
             if (params.length === 1){
                 return tracks[data.currentuniqid][params[0]];
             }else if (params.length === 2){
@@ -252,7 +250,7 @@
             return data.currentuniqid;
         },
         getNextUniqid : function(){
-            var data = this.data('playlist'), tracks = data.store.store('getTracks'), randno = 0, uniqid, ind = null;
+            var data = this.data('playlist'), tracks = $.store('getTracks'), randno = 0, uniqid, ind = null;
             if (data.shuffle){
                 if (data.loop && data.randomuniqids.length === 0){
                     for (ind in data.uniqids){
@@ -273,7 +271,7 @@
             return tracks[tracks[data.currentuniqid].next].uniqid;
         },
         getPrevUniqid : function(){
-            var data = this.data('playlist'), tracks = data.store.store('getTracks');
+            var data = this.data('playlist'), tracks = $.store('getTracks');
             if (data.shuffle){
                 data.randomuniqids.push(data.prevrandomuniqids.pop());
                 return data.prevrandomuniqids[data.prevrandomuniqids.length-1];
@@ -282,7 +280,7 @@
             return tracks[tracks[data.currentuniqid].prev].uniqid;
         },
         size : function(){
-            var data = this.data('playlist'), tracks = data.store.store('getTracks');
+            var data = this.data('playlist'), tracks = $.store('getTracks');
             return len(tracks);
         }
     };

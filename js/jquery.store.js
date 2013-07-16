@@ -1,51 +1,42 @@
 (function($) {
-    var version = "0.5",
+    var version = "1.0",
         methods = {
         init : function(options) {
-            var data = this.data('store'), oldTracks;
-            // If the plugin hasn't been initialized yet
-            if (!data) {
-                this.data('store', {
-                    target : this,
-                    tracks : {},
-                    uniqidhead : null,
-                    uniqidtail : null
-                });
-                data = this.data('store');
-                try {
-                    data.localstorage = !!localStorage.getItem;
-                } catch(e) {
-                    data.localstorage = false;
-                }
-                if (data.localstorage === false){
-                    return this;
-                }
+            $.store.tracks = {};
+            $.store.uniqidhead = null;
+            $.store.uniqidtail = null;
+            try {
+                $.store.localstorage = !!localStorage.getItem;
+            } catch(e) {
+                $.store.localstorage = false;
             }
-            oldTracks = this.store('_getTracks');
-            data.uniqidhead = this.store('_getUniqidHead');
-            data.uniqidtail = this.store('_getUniqidTail');
-            if (this.store('_version') == this.store('version') && len(oldTracks) > 0){
-                data.tracks = oldTracks;
+            if ($.store.localstorage === false){
+                return this;
+            }
+            var oldTracks = $.store('_getTracks');
+            $.store.uniqidhead = $.store('_getUniqidHead');
+            $.store.uniqidtail = $.store('_getUniqidTail');
+            if ($.store('_version') == $.store('version') && len(oldTracks) > 0){
+                $.store.tracks = oldTracks;
             }else{
-                this.store('empty');
-                this.store('_updateVersion');
+                $.store('empty');
+                $.store('_updateVersion');
             }
             return this;
         },
         setTracks : function(pl){
-            var data = this.data('store');
-            data.tracks = pl;
-            if (data.localstorage){
+            $.store.tracks = pl;
+            if ($.store.localstorage){
                 localStorage.tracks = JSON.stringify(pl);
             }
             return this;
         },
         add : function(track, loop){
-            var pl = this.store('getTracks'), head = this.store('_getUniqidHead'), tail = this.store('_getUniqidTail');
+            var pl = $.store('getTracks'), head = $.store('_getUniqidHead'), tail = $.store('_getUniqidTail');
             track.prev = null; // init
             track.next = null; // init
             if(len(pl) === 0){
-                this.store('_setUniqidHead', track.uniqid);
+                $.store('_setUniqidHead', track.uniqid);
             }
             if (!is_null(tail)){
                 track.prev = pl[tail].uniqid;
@@ -62,18 +53,18 @@
                     track.prev = track.uniqid;
                 }
             }
-            this.store('_setUniqidTail', track.uniqid);
+            $.store('_setUniqidTail', track.uniqid);
             pl[track.uniqid] = track;
-            this.store('setTracks', pl);
+            $.store('setTracks', pl);
             return this;
         },
         move : function(uniqid, after){
-            var pl = this.store('getTracks'), oldhead = this.store('_getUniqidHead');
+            var pl = $.store('getTracks'), oldhead = $.store('_getUniqidHead');
 
             if (pl[uniqid].prev !== null){
                 pl[pl[uniqid].prev].next = pl[uniqid].next;
             }else{
-                this.store('_setUniqidHead', pl[uniqid].next);
+                $.store('_setUniqidHead', pl[uniqid].next);
             }
             if (pl[uniqid].next !== null){
                 pl[pl[uniqid].next].prev = pl[uniqid].prev;
@@ -85,17 +76,17 @@
                 if (pl[after].next !== null){
                     pl[pl[after].next].prev = uniqid;
                 }else{ // Put in last place
-                    this.store('_setUniqidTail', uniqid);
+                    $.store('_setUniqidTail', uniqid);
                 }
                 pl[after].next = uniqid;
             }else{ // Put in first place
                 pl[oldhead].prev = uniqid;
                 pl[uniqid].prev = null;
                 pl[uniqid].next = pl[oldhead].uniqid;
-                this.store('_setUniqidHead', uniqid);
+                $.store('_setUniqidHead', uniqid);
             }
             /*Debug
-            var head = this.store('_getUniqidHead'), elt = pl[head], i = 10;
+            var head = $.store('_getUniqidHead'), elt = pl[head], i = 10;
             console.log('');
             while (1){
                 console.log(elt.name);
@@ -109,33 +100,33 @@
             }
             console.log('');
             //End debug */
-            this.store('setTracks', pl);
+            $.store('setTracks', pl);
             return this;
         },
         empty : function(){
-            this.store('setTracks', {});
-            this.store('_setUniqidHead', null);
-            this.store('_setUniqidTail', null);
+            $.store('setTracks', {});
+            $.store('_setUniqidHead', null);
+            $.store('_setUniqidTail', null);
             return this;
         },
         remove : function(uniqid){
-            var pl = this.store('getTracks');
+            var pl = $.store('getTracks');
             if(pl[uniqid].next !== null){
                 pl[pl[uniqid].next].prev = pl[uniqid].prev;
             }else{
-                this.store('_setUniqidTail', pl[uniqid].prev);
+                $.store('_setUniqidTail', pl[uniqid].prev);
             }
             if(pl[uniqid].prev !== null){
                 pl[pl[uniqid].prev].next = pl[uniqid].next;
             }else{
-                this.store('_setUniqidHead', pl[uniqid].next);
+                $.store('_setUniqidHead', pl[uniqid].next);
             }
             delete pl[uniqid];
-            this.store('setTracks', pl);
+            $.store('setTracks', pl);
             return this;
         },
         toggleLoop : function(){
-            var pl = this.store('getTracks'), head = this.store('_getUniqidHead'), tail = this.store('_getUniqidTail');
+            var pl = $.store('getTracks'), head = $.store('_getUniqidHead'), tail = $.store('_getUniqidTail');
             if (pl[head].prev !== null){ // Loop ON, switch it OFF
                 pl[head].prev = null;
                 pl[tail].next = null;
@@ -143,11 +134,11 @@
                 pl[head].prev = pl[tail].uniqid;
                 pl[tail].next = pl[head].uniqid;
             }
-            this.store('setTracks', pl);
+            $.store('setTracks', pl);
         },
         _version : function(){
-            var data = this.data('store'), v;
-            if (data.localstorage){
+            if ($.store.localstorage){
+                var v;
                 try {
                     v = !!localStorage.version;
                 } catch(e) {
@@ -160,8 +151,7 @@
             return false;
         },
         _updateVersion : function(){
-            var data = this.data('store');
-            if (data.localstorage){
+            if ($.store.localstorage){
                 localStorage.version = version;
             }
             return this;
@@ -170,63 +160,56 @@
             return version;
         },
         _getUniqidHead : function(){
-            var data = this.data('store');
-            if (data.localstorage && !!localStorage.uniqidhead){
+            if ($.store.localstorage && !!localStorage.uniqidhead){
                 return localStorage.uniqidhead;
             }
             return null;
         },
         _setUniqidHead : function(uniqidhead){
-            var data = this.data('store');
-            if (data.localstorage){
+            if ($.store.localstorage){
                 localStorage.uniqidhead = uniqidhead;
             }
             return this;
         },
         _getUniqidTail : function(){
-            var data = this.data('store');
-            if (data.localstorage && !!localStorage.uniqidtail){
+            if ($.store.localstorage && !!localStorage.uniqidtail){
                 return localStorage.uniqidtail;
             }
             return null;
         },
         _setUniqidTail : function(uniqidtail){
-            var data = this.data('store');
-            if (data.localstorage){
+            if ($.store.localstorage){
                 localStorage.uniqidtail = uniqidtail;
             }
             return this;
         },
         _getTracks : function(){
-            var data = this.data('store');
-            if(data.localstorage && !!localStorage.tracks){
+            if($.store.localstorage && !!localStorage.tracks){
                 return JSON.parse(localStorage.tracks);
             }
             return {};
         },
         getLoopState : function() {
-            var pl = this.store('getTracks');
+            var pl = $.store('getTracks');
             if (len(pl) === 0) return null;
-            return pl[this.store('_getUniqidHead')].prev !== null;
+            return pl[$.store('_getUniqidHead')].prev !== null;
         },
         getTracks : function(){
-            var data = this.data('store');
-            return data.tracks;
-        },
-        destroy : function() {
-            this.removeData('store');
-            return this;
+            return $.store.tracks;
         }
     };
-
-    $.fn.store = function(method) {
-        // Method calling logic
-        if (methods[method]) {
-            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof method === 'object' || !method) {
-            return methods.init.apply(this, arguments);
-        } else {
-            $.error('jQuery.store: Method ' + method + ' does not exist');
+    
+    $.extend({
+        store: function(method) {
+            // Method calling logic
+            if (methods[method]) {
+                return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+            } else if (typeof method === 'object' || !method) {
+                return methods.init.apply(this, arguments);
+            } else {
+                $.error('jQuery.store: Method ' + method + ' does not exist');
+            }
         }
-    };
+    });
+    $.store();
 })(jQuery);

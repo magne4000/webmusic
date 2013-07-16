@@ -61,6 +61,9 @@ function clone(obj){
 }
 
 function len(obj) {
+    if (!obj){
+        return 0;
+    }
     var length = obj.length ? obj.length : 0, k = null;
     for (k in obj)
         length++;
