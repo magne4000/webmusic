@@ -10,9 +10,9 @@ if (isset($_POST['user']) && isset($_POST['password'])){
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" type="image/png" href="../images/favicon.png" />
 <link rel="stylesheet" type="text/css" href="../css/global.css" />
-<link rel="stylesheet" type="text/css" href="../css/jquery-ui-1.10.0.custom.css" />
+<link rel="stylesheet" type="text/css" href="../css/jquery-ui-1.10.3.custom.min.css" />
 <script type="text/javascript" src="../js/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-ui-1.10.0.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui-1.10.3.custom.min.js"></script>
 <script type="text/javascript" src="../js/jquery.easy.notification.js"></script>
 <script type="text/javascript" src="../js/jquery.ajaxprogress.js"></script>
 <script type="text/javascript" src="../js/utils.js"></script>
