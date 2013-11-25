@@ -202,9 +202,7 @@
     position: absolute;
     height: 132px;
     bottom: 40px;
-    border-top: 2px solid white;
-    border-left: 2px solid white;
-    border-right: 2px solid white;
+    box-shadow: 0 12px 0 #202020, 0 0 12px rgba(255, 255, 255, 0.4);
     right: 0px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
